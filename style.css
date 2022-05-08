@@ -181,6 +181,11 @@
     background-position-y: center;
 }
 
+.profile__edit-button:hover {
+    transition: 0.3s ease-in;
+    opacity: 0.6;
+}
+
 .profile__add-button {
     background-image: url('./images/add-button.svg');
     width: 150px;
@@ -191,6 +196,11 @@
     background-position-x: 50%;
     background-position-y: center;
     background-color: #000;
+}
+
+.profile__add-button:hover {
+    transition: 0.3s ease-in;
+    opacity: 0.6;
 }
 
 @media screen and (max-width: 768px) {
@@ -272,6 +282,16 @@
     background-size: contain;
     border: none;
     background-color: #fff;
+}
+
+.element__like:hover {
+    transition: 0.3s ease-in; 
+    opacity: 0.5;
+}
+
+.element__like:active {
+    background-image: url(./images/like-black.svg);
+    opacity: 1;
 }
 
 .page__footer {
@@ -407,6 +427,11 @@
     border-radius: 2px;
 }
 
+.popup__save-button:hover {
+    transition: 0.3s ease-in;
+    opacity: 0.8;
+}
+
 .popup__save-button_text_parameter {
     color: #fff;
     padding: 14px 0 18px;
@@ -433,6 +458,11 @@
     position: absolute;
     top: -40px;
     right: -40px;
+}
+
+.popup__close-button:hover {
+    transition: 0.3s ease-in;
+    opacity: 0.6;
 }
 
 @media screen and (max-width: 768px) {
