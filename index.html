@@ -17,11 +17,11 @@
                         <img class="profile__avatar" src="./images/avatar.jpg" alt="аваторка.">
                       <div class="profile__info">
                         <h1 class="profile__title">Жак-Ив Кусто</h1>
-                        <button type="button" class="profile__edit-button"></button>
+                        <button type="button" class="profile__edit-button" aria-label="Редактировать"></button>
                         <p class="profile__subtitle">Исследователь океана</p>
                       </div>
                     </div>
-                    <button type="button" class="profile__add-button"></button>
+                    <button type="button" class="profile__add-button" aria-label="Добавить фото"></button>
                 </section>
                 <section class="elements">
                     <ul class="elements__list">
@@ -78,9 +78,9 @@
                     <h2 class="popup__heading">Редактировать профиль</h2>
                     <form name="user">
                         <fieldset class="popup__form">
-                            <input type="text" name="username" placeholder="ФИО" class="popup__input popup__input_text_parameter" value="Жак-Ив Кусто" required>
-                            <input type="text" name="profession" placeholder="Профессия" class="popup__input popup__input_text_parameter" value="Исследователь океана" required>
-                            <button class="popup__save-button popup__save-button_text_parameter" type="submit">Сохранить</button>
+                            <input type="text" name="username" placeholder="ФИО" class="popup__input" value="Жак-Ив Кусто" required>
+                            <input type="text" name="profession" placeholder="Профессия" class="popup__input" value="Исследователь океана" required>
+                            <button class="popup__save-button" type="submit">Сохранить</button>
                         </fieldset>
                     </form>
                     <button class="popup__close-button" type="button" arial-label="Закрыть"></button>
