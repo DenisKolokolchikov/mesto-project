@@ -6,6 +6,10 @@
     font-style: normal;
     color: #fff;
     margin: 0 0 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 294px;
 }
 
 @media screen and (max-width: 768px) {
@@ -13,5 +17,6 @@
         font-size: 27px;
         line-height: 33px;
         margin-bottom: 16px;
+        max-width: 189px;
     }
 }
