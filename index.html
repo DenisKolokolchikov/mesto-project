@@ -15,6 +15,7 @@
           alt="Изображение логотипа."
         />
       </header>
+
       <main class="content page__content">
         <section class="profile page__profile">
           <div class="profile__card">
@@ -24,13 +25,15 @@
               alt="аваторка."
             />
             <div class="profile__info">
-              <h1 class="profile__title">Жак-Ив Кусто</h1>
+              <h1 class="profile__title" id="profile-name">Жак-Ив Кусто</h1>
               <button
                 type="button"
                 class="profile__edit-button"
                 aria-label="Редактировать"
               ></button>
-              <p class="profile__subtitle">Исследователь океана</p>
+              <p class="profile__subtitle" id="profile-link">
+                Исследователь океана
+              </p>
             </div>
           </div>
           <button
@@ -39,9 +42,10 @@
             aria-label="Добавить фото"
           ></button>
         </section>
+
         <section class="elements">
           <ul class="elements__list">
-            <li class="elements__item">
+            <!--<li class="elements__item">
               <img
                 class="elements__img"
                 src="./images/karachaevsk.jpg"
@@ -106,23 +110,26 @@
                 <h2 class="elements__title">Карачаевск</h2>
                 <button type="button" class="elements__like"></button>
               </div>
-            </li>
+            </li>-->
           </ul>
         </section>
       </main>
+
       <footer class="footer page__footer">
         <p class="footer__copyright">&copy;2022 Mesto Russia</p>
       </footer>
-      <div class="popup">
+
+      <div class="popup" id="popup-profile">
         <div class="popup__container">
           <h2 class="popup__heading">Редактировать профиль</h2>
-          <form name="user">
+          <form name="form-edit" id="form-edit">
             <fieldset class="popup__form">
               <input
                 type="text"
                 name="username"
                 placeholder="ФИО"
                 class="popup__input"
+                id="name-input"
                 value="Жак-Ив Кусто"
                 required
               />
@@ -131,22 +138,72 @@
                 name="profession"
                 placeholder="Профессия"
                 class="popup__input"
+                id="job-input"
                 value="Исследователь океана"
                 required
               />
-              <button class="popup__save-button" type="submit">
+              <button class="popup__save-button" id="edit-save" type="submit">
                 Сохранить
               </button>
             </fieldset>
           </form>
           <button
             class="popup__close-button"
+            id="profile__close-button"
+            type="button"
+            arial-label="Закрыть"
+          ></button>
+        </div>
+      </div>
+
+      <div class="popup" id="popup-new-image">
+        <div class="popup__container">
+          <h2 class="popup__heading">Новое место</h2>
+          <form name="form-image" id="form-image">
+            <fieldset class="popup__form">
+              <input
+                type="text"
+                name="username"
+                placeholder="Название"
+                class="popup__input"
+                id="name-img"
+                value="Название"
+                required
+              />
+              <input
+                type="url"
+                name="link"
+                placeholder="Ссылка на картинку"
+                class="popup__input"
+                id="link-img"
+                value="Ссылка на картинку"
+                required
+              />
+              <button class="popup__save-button" id="add-save" type="submit">
+                Сохранить
+              </button>
+            </fieldset>
+          </form>
+          <button
+            class="popup__close-button"
+            id="add__close-button"
             type="button"
             arial-label="Закрыть"
           ></button>
         </div>
       </div>
     </div>
+
+    <template id="card-template">
+      <li class="elements__item">
+        <img class="elements__img" src="" ; alt="" />
+        <div class="elements__group">
+          <h2 class="elements__title"></h2>
+          <button type="button" class="elements__like"></button>
+        </div>
+      </li>
+    </template>
+
     <script src="./scripts/index.js"></script>
   </body>
 </html>

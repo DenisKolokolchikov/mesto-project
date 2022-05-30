@@ -8,12 +8,14 @@
     cursor: pointer;
 }
 
+.elements__like-active {
+    opacity: 1;
+    background-image: url('../../../images/like-black.svg');
+    
+}
+
 .elements__like:hover {
     transition: 0.3s ease-in; 
     opacity: 0.5;
 }
 
-.elements__like:active {
-    background-image: url(../../../images/like-black.svg);
-    opacity: 1;
-}
