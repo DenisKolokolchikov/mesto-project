@@ -1,8 +1,8 @@
 //открытие и закрытие попап
 
-let editButton = document.querySelector('.profile__edit-button');
-let closePopupEdit = document.querySelector('#profile__close-button');
-let popupProfile = document.querySelector('#popup-profile');
+const editButton = document.querySelector('.profile__edit-button');
+const closePopupEdit = document.querySelector('#profile__close-button');
+const popupProfile = document.querySelector('#popup-profile');
 
 editButton.addEventListener('click', function() {
     popupProfile.classList.add('popup_opened');
@@ -15,9 +15,9 @@ closePopupEdit.addEventListener('click', function() {
 
 //подключаю кнопку открытия попап для добавления картинок
 
-let popupNewImage = document.querySelector('#popup-new-image');
-let addButton = document.querySelector('.profile__add-button');
-let closePopupAdd = document.querySelector('#add__close-button');
+const popupNewImage = document.querySelector('#popup-new-image');
+const addButton = document.querySelector('.profile__add-button');
+const closePopupAdd = document.querySelector('#add__close-button');
 
 addButton.addEventListener('click', function() {
     popupNewImage.classList.add('popup_opened');
@@ -29,12 +29,12 @@ closePopupAdd.addEventListener('click', function() {
 
 //редактирование имени и информации о себе
 
-let formEdit = document.querySelector('#form-edit');
-let nameInput = document.querySelector('#name-input');
-let jobInput = document.querySelector('#job-input');
-let editSaveButton = document.querySelector('#edit-save');
-let profileTitle = document.querySelector('.profile__title');
-let profileSubtitle = document.querySelector('.profile__subtitle');
+const formEdit = document.querySelector('#form-edit');
+const nameInput = document.querySelector('#name-input');
+const jobInput = document.querySelector('#job-input');
+const editSaveButton = document.querySelector('#edit-save');
+const profileTitle = document.querySelector('.profile__title');
+const profileSubtitle = document.querySelector('.profile__subtitle');
 
 function formSublitHandler (evt) {
     evt.preventDefault();
@@ -47,6 +47,7 @@ function formSublitHandler (evt) {
 
 formEdit.addEventListener('submit', formSublitHandler);
 
+//массив для добавления карточек
 const initialCards = [
     {
       name: 'Архыз',
@@ -74,19 +75,32 @@ const initialCards = [
     }
   ];
 
-//const formImage = document.querySelector('#form-image');//получаем форму
+//удаление карточки
+const handleClickButtonDelete = function (evt) {
+    evt.target.closest('.elements__item').remove();
+}
+
+//подключаем лайк
+const handleClickButtonLike = function (evt) {
+    evt.target.classList.toggle('elements__like-active');
+}
+
+//добавляем карточки
 const cardList = document.querySelector('.elements__list'); //контейнер для карточек <ul>
 const cardTemplate = document.querySelector('#card-template').content.querySelector('.elements__item');
-
+//const formImage = document.querySelector('#form-image');
 //создаем функцию, которая создает карточку
 //функция принимает данные (параметр data) из которых будет создавать разметку
 const createCard = function(data) {
     const cardElement = cardTemplate.cloneNode(true);
     const cardImage = cardElement.querySelector('.elements__img');// img из template
     const cardName = cardElement.querySelector('.elements__title');//<h2> из template
-    const cardLike = cardElement.querySelector('.elements__like').addEventListener('click', function (evt) {
-        evt.target.classList.toggle('elements__like-active');
-    });
+    const cardDelete = cardElement.querySelector('.elements__del');
+    const cardLike = cardElement.querySelector('.elements__like'); 
+
+    cardLike.addEventListener('click', handleClickButtonLike);
+    cardDelete.addEventListener('click', handleClickButtonDelete);
+
     cardName.textContent = data.name; //с массива
     cardImage.src = data.link; //с массива
 
@@ -109,3 +123,24 @@ initialCards.forEach(function(item) {
     renderCard(item, cardList); //указываем элементы и контейнер <ul>
 });
 // теперь можно функцию renderCard переиспользовать
+
+
+//подключение формы добывления картинки
+const formImage = document.querySelector('#form-image');
+const inputNameImg = document.querySelector('#name-img');
+const inputLinkImg = document.querySelector('#link-img');
+const addSaveButton = document.querySelector('#add-save');
+
+formImage.addEventListener('submit', function(evt) { //форма попапа
+    evt.preventDefault();
+    const data = {
+        link: inputLinkImg.value,
+        name: inputNameImg.value,
+    }
+    inputLinkImg.value = "";
+    inputNameImg.value = "";
+   addSaveButton.addEventListener('click', function (){  //закрытие попапа
+         popupNewImage.classList.remove('popup_opened');         
+    });
+    renderCard(data, cardList); 
+});
