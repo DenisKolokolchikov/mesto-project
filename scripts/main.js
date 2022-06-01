@@ -1,6 +1,6 @@
 //открытие и закрытие попап
-const editButton = document.querySelector('.profile__edit-button');
-const closePopupEdit = document.querySelector('#profile__close-button');
+const editButton = document.querySelector('.button__edit');
+const closePopupEdit = document.querySelector('#button__close');
 const popupProfile = document.querySelector('#popup-profile');
 
 editButton.addEventListener('click', function() {
@@ -12,10 +12,10 @@ closePopupEdit.addEventListener('click', function() {
     popupProfile.classList.remove('popup_opened');
 });
 
-//подключаю кнопку открытия попап для добавления картинок
+//подключение кнопки открытия попап для добавления картинок
 const popupNewImage = document.querySelector('#popup-new-image');
-const addButton = document.querySelector('.profile__add-button');
-const closePopupAdd = document.querySelector('#add__close-button');
+const addButton = document.querySelector('.button__add');
+const closePopupAdd = document.querySelector('#button__close-add');
 
 addButton.addEventListener('click', function() {
     popupNewImage.classList.add('popup_opened');
@@ -44,7 +44,6 @@ function formSublitHandler(evt) {
 
 formEdit.addEventListener('submit', formSublitHandler);
 
-//массив для добавления карточек
 const initialCards = [
     {
       name: 'Архыз',
@@ -73,29 +72,31 @@ const initialCards = [
   ];
 
 const popupTypeImage = document.querySelector('.popup_type_image');
-const popupImage = document.querySelector('.popup_type_image');
+const popupImage = document.querySelector('#popup-type-image');
 const popupPic = popupImage.querySelector('.popup__big-image');
-const popupCloseImage = document.querySelector('.popup__close-image');
+const popupCloseImage = document.querySelector('.button__close-image');
+const popupBigTitle = document.querySelector('.popup__big-title');
 //удаление карточки
 const handleClickButtonDelete = function(evt) {
     evt.target.closest('.elements__item').remove();
 }
 
-//подключаем лайк
+//подключаю лайк
 const handleClickButtonLike = function(evt) {
-    evt.target.classList.toggle('elements__like-active');
+    evt.target.classList.toggle('button__like-active');
 }
 
-//открываем большую картинку
+//открываю большую картинку и подключение figcaption
 const openPopup = function(popupTypeImage) {
     popupTypeImage.classList.add('popup_opened');
 }
 const handleClickImage = function(data) {
     popupPic.src = data.link;
+    popupBigTitle.textContent = data.name; 
     openPopup(popupImage);
 }
 
-//закрываем большую картинку
+//закрываю большую картинку
 const closePopup = function(popupTypeImage) {
     popupTypeImage.classList.remove('popup_opened')
 }
@@ -103,46 +104,38 @@ const handleClickImageClose = function() {
     closePopup(popupImage);
 }
 
-//добавляем карточки
-const cardList = document.querySelector('.elements__list'); //контейнер для карточек <ul>
+//добавляю карточку
+const cardList = document.querySelector('.elements__list'); 
 const cardTemplate = document.querySelector('#card-template').content.querySelector('.elements__item');
-//const formImage = document.querySelector('#form-image');
 //создаем функцию, которая создает карточку
-//функция принимает данные (параметр data) из которых будет создавать разметку
 const createCard = function(data) {
     const cardElement = cardTemplate.cloneNode(true);
-    const cardImage = cardElement.querySelector('.elements__img');// img из template
-    const cardName = cardElement.querySelector('.elements__title');//<h2> из template
-    const cardDelete = cardElement.querySelector('.elements__del');
-    const cardLike = cardElement.querySelector('.elements__like'); 
+    const cardImage = cardElement.querySelector('.elements__img');
+    const cardName = cardElement.querySelector('.elements__title');
+    const cardDelete = cardElement.querySelector('.button__del');
+    const cardLike = cardElement.querySelector('.button__like'); 
 
     cardLike.addEventListener('click', handleClickButtonLike);
     cardDelete.addEventListener('click', handleClickButtonDelete);
     cardImage.addEventListener('click', () => handleClickImage(data));
     popupCloseImage.addEventListener('click', handleClickImageClose);
-
-    cardName.textContent = data.name; //с массива
-    cardImage.src = data.link; //с массива
+   
+    cardName.textContent = data.name; 
+    cardImage.src = data.link; 
+    cardImage.alt = data.name; 
 
     return cardElement;
 }
 
-//выносим функцию добавления карточки на страницу в отдельную функцию
-//функция принимает данные и место куда добавляем карточки - некий контейнер
 const renderCard = function(data, container) {
-    const card = createCard(data); //item меняем на data
-    //вставляем нашу карточку card в контейнер
-    container.prepend(card); //меняем на контейнер
+    const card = createCard(data); 
+    container.prepend(card); 
 }
 
 //рендерим карточки
-//параметры функции: сам объект, его индекс, ссылка на массив
-//перебираем только элементы
 initialCards.forEach(function(item) {
-    //вызываем функцию render
-    renderCard(item, cardList); //указываем элементы и контейнер <ul>
+    renderCard(item, cardList); 
 });
-// теперь можно функцию renderCard переиспользовать
 
 //подключение формы добывления картинки
 const formImage = document.querySelector('#form-image');
@@ -150,7 +143,7 @@ const inputNameImg = document.querySelector('#name-img');
 const inputLinkImg = document.querySelector('#link-img');
 const addSaveButton = document.querySelector('#add-save');
 
-formImage.addEventListener('submit', function(evt) { //форма попапа
+formImage.addEventListener('submit', function(evt) { 
     evt.preventDefault();
     const data = {
         link: inputLinkImg.value,
@@ -158,8 +151,8 @@ formImage.addEventListener('submit', function(evt) { //форма попапа
     }
     inputLinkImg.value = "";
     inputNameImg.value = "";
-    addSaveButton.addEventListener('click', function(){  //закрытие попапа
-         popupNewImage.classList.remove('popup_opened');         
-    });
+    popupNewImage.classList.remove('popup_opened'); 
     renderCard(data, cardList); 
 });
+
+

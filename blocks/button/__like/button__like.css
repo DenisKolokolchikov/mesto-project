@@ -1,21 +1,20 @@
-.elements__like {
+.button__like {
     width: 22px;
     height: 19px;
     background-image: url('../../../images/like.svg');
     background-size: contain;
     border: none;
     background-color: transparent;
-    cursor: pointer;
+    /*cursor: pointer;*/
     background-repeat: no-repeat; /*если убрать свойство, то появится черточки под сердечком, данное свойство убирает черточки, но высота родительского блока остается везде разной*/
 }
 
-.elements__like-active {
+.button__like-active {
     opacity: 1;
     background-image: url('../../../images/like-black.svg');
 }
 
-.elements__like:hover {
+.button__like:hover {
     transition: 0.3s ease-in; 
     opacity: 0.5;
 }
-

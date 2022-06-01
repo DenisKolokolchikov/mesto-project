@@ -28,7 +28,7 @@
               <h1 class="profile__title" id="profile-name">Жак-Ив Кусто</h1>
               <button
                 type="button"
-                class="profile__edit-button"
+                class="button button__edit"
                 aria-label="Редактировать"
               ></button>
               <p class="profile__subtitle" id="profile-link">
@@ -38,80 +38,13 @@
           </div>
           <button
             type="button"
-            class="profile__add-button"
+            class="button button__add"
             aria-label="Добавить фото"
           ></button>
         </section>
 
         <section class="elements">
-          <ul class="elements__list">
-            <!--<li class="elements__item">
-              <img
-                class="elements__img"
-                src="./images/karachaevsk.jpg"
-                alt="Карачаевск."
-              />
-              <div class="elements__group">
-                <h2 class="elements__title">Карачаевск</h2>
-                <button type="button" class="elements__like"></button>
-              </div>
-            </li>
-            <li class="elements__item">
-              <img
-                class="elements__img"
-                src="./images/elbrus.jpg"
-                alt="Гора Эльбрус."
-              />
-              <div class="elements__group">
-                <h2 class="elements__title">Гора Эльбрус</h2>
-                <button type="button" class="elements__like"></button>
-              </div>
-            </li>
-            <li class="elements__item">
-              <img
-                class="elements__img"
-                src="./images/dombay.jpg"
-                alt="Домбай."
-              />
-              <div class="elements__group">
-                <h2 class="elements__title">Домбай</h2>
-                <button type="button" class="elements__like"></button>
-              </div>
-            </li>
-            <li class="elements__item">
-              <img
-                class="elements__img"
-                src="./images/elbrus.jpg"
-                alt="Гора Эльбрус."
-              />
-              <div class="elements__group">
-                <h2 class="elements__title">Гора Эльбрус</h2>
-                <button type="button" class="elements__like"></button>
-              </div>
-            </li>
-            <li class="elements__item">
-              <img
-                class="elements__img"
-                src="./images/dombay.jpg"
-                alt="Домбай."
-              />
-              <div class="elements__group">
-                <h2 class="elements__title">Домбай</h2>
-                <button type="button" class="elements__like"></button>
-              </div>
-            </li>
-            <li class="elements__item">
-              <img
-                class="elements__img"
-                src="./images/karachaevsk.jpg"
-                alt="Карачаевск."
-              />
-              <div class="elements__group">
-                <h2 class="elements__title">Карачаевск</h2>
-                <button type="button" class="elements__like"></button>
-              </div>
-            </li>-->
-          </ul>
+          <ul class="elements__list"></ul>
         </section>
       </main>
 
@@ -142,14 +75,14 @@
                 value="Исследователь океана"
                 required
               />
-              <button class="popup__save-button" id="edit-save" type="submit">
+              <button class="button button__save" id="edit-save" type="submit">
                 Сохранить
               </button>
             </fieldset>
           </form>
           <button
-            class="popup__close-button"
-            id="profile__close-button"
+            class="button button__close"
+            id="button__close"
             type="button"
             arial-label="Закрыть"
           ></button>
@@ -179,44 +112,44 @@
                 value=""
                 required
               />
-              <button class="popup__save-button" id="add-save" type="submit">
+              <button class="button button__save" id="add-save" type="submit">
                 Сохранить
               </button>
             </fieldset>
           </form>
           <button
-            class="popup__close-button"
-            id="add__close-button"
+            class="button button__close"
+            id="button__close-add"
             type="button"
             arial-label="Закрыть"
           ></button>
         </div>
       </div>
 
-      <div class="popup popup_type_image">
+      <div class="popup" id="popup-type-image">
         <figure class="popup__container-image">
           <button
-            class="popup__close-image"
+            class="button button__close-image"
             id="add__close-button"
             type="button"
             arial-label="Закрыть"
           ></button>
           <img class="popup__big-image" src="" alt="" />
+          <figcaption class="popup__big-title"></figcaption>
         </figure>
       </div>
+
+      <template id="card-template">
+        <li class="elements__item">
+          <img class="elements__img" src="" ; alt="" />
+          <div class="elements__group">
+            <h2 class="elements__title"></h2>
+            <button type="button" class="button button__like"></button>
+          </div>
+          <button type="button" class="button button__del"></button>
+        </li>
+      </template>
     </div>
-
-    <template id="card-template">
-      <li class="elements__item">
-        <img class="elements__img" src="" ; alt="" />
-        <div class="elements__group">
-          <h2 class="elements__title"></h2>
-          <button type="button" class="elements__like"></button>
-        </div>
-        <button class="elements__del" type="button"></button>
-      </li>
-    </template>
-
-    <script src="./scripts/index.js"></script>
+    <script src="./scripts/main.js"></script>
   </body>
 </html>
