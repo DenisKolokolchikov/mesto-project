@@ -1,5 +1,4 @@
 //открытие и закрытие попап
-
 const editButton = document.querySelector('.profile__edit-button');
 const closePopupEdit = document.querySelector('#profile__close-button');
 const popupProfile = document.querySelector('#popup-profile');
@@ -14,7 +13,6 @@ closePopupEdit.addEventListener('click', function() {
 });
 
 //подключаю кнопку открытия попап для добавления картинок
-
 const popupNewImage = document.querySelector('#popup-new-image');
 const addButton = document.querySelector('.profile__add-button');
 const closePopupAdd = document.querySelector('#add__close-button');
@@ -28,7 +26,6 @@ closePopupAdd.addEventListener('click', function() {
 });
 
 //редактирование имени и информации о себе
-
 const formEdit = document.querySelector('#form-edit');
 const nameInput = document.querySelector('#name-input');
 const jobInput = document.querySelector('#job-input');
@@ -36,7 +33,7 @@ const editSaveButton = document.querySelector('#edit-save');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 
-function formSublitHandler (evt) {
+function formSublitHandler(evt) {
     evt.preventDefault();
     profileTitle.textContent = nameInput.value;
     profileSubtitle.textContent = jobInput.value;
@@ -75,14 +72,35 @@ const initialCards = [
     }
   ];
 
+const popupTypeImage = document.querySelector('.popup_type_image');
+const popupImage = document.querySelector('.popup_type_image');
+const popupPic = popupImage.querySelector('.popup__big-image');
+const popupCloseImage = document.querySelector('.popup__close-image');
 //удаление карточки
-const handleClickButtonDelete = function (evt) {
+const handleClickButtonDelete = function(evt) {
     evt.target.closest('.elements__item').remove();
 }
 
 //подключаем лайк
-const handleClickButtonLike = function (evt) {
+const handleClickButtonLike = function(evt) {
     evt.target.classList.toggle('elements__like-active');
+}
+
+//открываем большую картинку
+const openPopup = function(popupTypeImage) {
+    popupTypeImage.classList.add('popup_opened');
+}
+const handleClickImage = function(data) {
+    popupPic.src = data.link;
+    openPopup(popupImage);
+}
+
+//закрываем большую картинку
+const closePopup = function(popupTypeImage) {
+    popupTypeImage.classList.remove('popup_opened')
+}
+const handleClickImageClose = function() {
+    closePopup(popupImage);
 }
 
 //добавляем карточки
@@ -100,6 +118,8 @@ const createCard = function(data) {
 
     cardLike.addEventListener('click', handleClickButtonLike);
     cardDelete.addEventListener('click', handleClickButtonDelete);
+    cardImage.addEventListener('click', () => handleClickImage(data));
+    popupCloseImage.addEventListener('click', handleClickImageClose);
 
     cardName.textContent = data.name; //с массива
     cardImage.src = data.link; //с массива
@@ -124,7 +144,6 @@ initialCards.forEach(function(item) {
 });
 // теперь можно функцию renderCard переиспользовать
 
-
 //подключение формы добывления картинки
 const formImage = document.querySelector('#form-image');
 const inputNameImg = document.querySelector('#name-img');
@@ -139,7 +158,7 @@ formImage.addEventListener('submit', function(evt) { //форма попапа
     }
     inputLinkImg.value = "";
     inputNameImg.value = "";
-   addSaveButton.addEventListener('click', function (){  //закрытие попапа
+    addSaveButton.addEventListener('click', function(){  //закрытие попапа
          popupNewImage.classList.remove('popup_opened');         
     });
     renderCard(data, cardList); 
