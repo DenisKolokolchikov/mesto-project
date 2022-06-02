@@ -25,15 +25,15 @@
               alt="аваторка."
             />
             <div class="profile__info">
-              <h1 class="profile__title" id="profile-name">Жак-Ив Кусто</h1>
+              <h1 class="profile__title">Жак-Ив Кусто</h1>
+              <!--id='profile-name'-->
               <button
                 type="button"
                 class="button button__edit"
                 aria-label="Редактировать"
               ></button>
-              <p class="profile__subtitle" id="profile-link">
-                Исследователь океана
-              </p>
+              <p class="profile__subtitle">Исследователь океана</p>
+              <!--id='profile-link'-->
             </div>
           </div>
           <button
@@ -52,54 +52,53 @@
         <p class="footer__copyright">&copy;2022 Mesto Russia</p>
       </footer>
 
-      <div class="popup" id="popup-profile">
+      <div class="popup popup-profile">
         <div class="popup__container">
           <h2 class="popup__heading">Редактировать профиль</h2>
-          <form name="form-edit" id="form-edit">
+          <form name="form-edit" class="form__edit">
             <fieldset class="popup__form">
               <input
                 type="text"
                 name="username"
                 placeholder="ФИО"
-                class="popup__input"
-                id="name-input"
-                value="Жак-Ив Кусто"
+                class="popup__input name__input"
+                value="Денис"
                 required
               />
               <input
                 type="text"
                 name="profession"
                 placeholder="Профессия"
-                class="popup__input"
-                id="job-input"
-                value="Исследователь океана"
+                class="popup__input job__input"
+                value="Студент Я.Практикум"
                 required
               />
-              <button class="button button__save" id="edit-save" type="submit">
+              <button
+                class="button button__save button__edit-save"
+                type="submit"
+              >
                 Сохранить
               </button>
             </fieldset>
           </form>
           <button
-            class="button button__close"
-            id="button__close"
+            class="button button__close button__close-edit"
             type="button"
             arial-label="Закрыть"
           ></button>
         </div>
       </div>
 
-      <div class="popup" id="popup-new-image">
+      <div class="popup popup-image">
         <div class="popup__container">
           <h2 class="popup__heading">Новое место</h2>
-          <form name="form-image" id="form-image">
+          <form name="form-image" class="form__image">
             <fieldset class="popup__form">
               <input
                 type="text"
                 name="username"
                 placeholder="Название"
-                class="popup__input"
-                id="name-img"
+                class="popup__input name__img"
                 value=""
                 required
               />
@@ -107,30 +106,30 @@
                 type="url"
                 name="link"
                 placeholder="Ссылка на картинку"
-                class="popup__input"
-                id="link-img"
+                class="popup__input link__img"
                 value=""
                 required
               />
-              <button class="button button__save" id="add-save" type="submit">
+              <button
+                class="button button__save button__add-save"
+                type="submit"
+              >
                 Сохранить
               </button>
             </fieldset>
           </form>
           <button
-            class="button button__close"
-            id="button__close-add"
+            class="button button__close button__close-add"
             type="button"
             arial-label="Закрыть"
           ></button>
         </div>
       </div>
 
-      <div class="popup" id="popup-type-image">
+      <div class="popup popup__type-image">
         <figure class="popup__container-image">
           <button
             class="button button__close-image"
-            id="add__close-button"
             type="button"
             arial-label="Закрыть"
           ></button>
