@@ -80,14 +80,14 @@ closePopupAdd.addEventListener('click', function() {
 });
 
 //редактирование имени и информации о себе
-function SubmitProfileForm(evt) {
+function submitProfileForm(evt) {
     evt.preventDefault();
     profileTitle.textContent = nameInput.value;
     profileSubtitle.textContent = jobInput.value;
     closePopup(popupProfile);
 }    
 
-formEdit.addEventListener('submit', SubmitProfileForm);
+formEdit.addEventListener('submit', submitProfileForm);
 
 //удаление карточки
 const handleClickButtonDelete = function(evt) {
