@@ -40,7 +40,6 @@ const editSaveButton = document.querySelector('.button__edit-save');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 
-const popupTypeImage = document.querySelector('.popup_type_image');
 const popupImage = document.querySelector('.popup__type-image');
 const popupPic = popupImage.querySelector('.popup__big-image');
 const popupCloseImage = document.querySelector('.button__close-image');
