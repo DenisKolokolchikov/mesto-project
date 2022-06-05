@@ -63,6 +63,7 @@ function openPopup(popup) {
 }
 //открытие и закрытие попап
 editButton.addEventListener('click', function() {
+    editPopupData(popupProfile);
     openPopup(popupProfile);
 });
 
@@ -78,6 +79,11 @@ addButton.addEventListener('click', function() {
 closePopupAdd.addEventListener('click', function() {
     closePopup(popupNewImage);
 });
+
+function editPopupData() {
+    nameInput.value = profileTitle.textContent;
+    jobInput.value = profileSubtitle.textContent;
+}
 
 //редактирование имени и информации о себе
 function submitProfileForm(evt) {
