@@ -64,8 +64,8 @@ const popups = document.querySelectorAll('.popup');
 const activePopup = document.querySelector('.popup_opened');
 
 const formEditPopup = document.forms.form_edit;
-//const userName = formEditPopup.element.username;
-//const profession = formEditPopup.element.profession;
+const userName = formEditPopup.elements.username;
+const profession = formEditPopup.elements.profession;
 
 //закрытие попап
 function closePopup(popup) {
@@ -120,9 +120,21 @@ function submitProfileForm(evt) {
     profileTitle.textContent = nameInput.value;
     profileSubtitle.textContent = jobInput.value;
     closePopup(popupProfile);
+    setSubmitButtonState(false);
 }    
 
 formEditPopup.addEventListener('submit', submitProfileForm);
+
+//disabled кнопки сохранить редактирования профиля
+function setSubmitButtonState (isFormValid) {
+    if (isFormValid) {
+        editSaveButton.removeAttribute('disabled');
+        editSaveButton.classList.remove('button__save_disabled');
+    } else {
+        editSaveButton.setAttribute('disabled', true);
+        editSaveButton.classList.add('button__save_disabled');
+    }
+}
 
 //удаление карточки
 const handleClickButtonDelete = function(evt) {
@@ -216,7 +228,11 @@ function oneClick(evt) {
 
 document.addEventListener('click', oneClick);
 
-
+//события change и input для редактирования профиля
+formEditPopup.addEventListener('input', function(evt) {
+    isValid = nameInput.value.length > 0 && jobInput.value.length > 0;
+    setSubmitButtonState(isValid);
+});
 
 
 
