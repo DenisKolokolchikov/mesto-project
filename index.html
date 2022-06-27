@@ -22,7 +22,7 @@
             <img
               class="profile__avatar"
               src="./images/avatar.jpg"
-              alt="аваторка."
+              alt="аватарка."
             />
             <div class="profile__info">
               <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -55,22 +55,26 @@
       <div class="popup popup-profile">
         <div class="popup__container">
           <h2 class="popup__heading">Редактировать профиль</h2>
-          <form name="form-edit" class="form__edit">
+          <form name="form_edit" class="form__edit" novalidate>
             <fieldset class="popup__form">
               <input
                 type="text"
                 name="username"
-                placeholder="Жак-Ив Кусто"
+                placeholder="Имя"
                 class="popup__input name__input"
                 value="Жак-Ив Кусто"
+                minlength="2"
+                maxlength="40"
                 required
               />
               <input
                 type="text"
                 name="profession"
-                placeholder="Исследователь океана"
+                placeholder="Профессия"
                 class="popup__input job__input"
                 value="Исследователь океана"
+                minlength="2"
+                maxlength="200"
                 required
               />
               <button
@@ -137,6 +141,56 @@
           <figcaption class="popup__big-title"></figcaption>
         </figure>
       </div>
+
+      <div class="popup popup-avatar">
+        <div class="popup__container">
+          <h2 class="popup__heading">Обновить аватар</h2>
+          <form name="form-avatar" class="form__avatar">
+            <fieldset class="popup__form">
+              <input
+                type="url"
+                name="link"
+                placeholder="Ссылка на аватар"
+                class="popup__input avatar__input"
+                value=""
+                required
+              />
+              <button
+                class="button button__save button__avatar-save"
+                type="submit"
+              >
+                Сохранить
+              </button>
+            </fieldset>
+          </form>
+          <button
+            class="button button__close button__close-avatar"
+            type="button"
+            arial-label="Закрыть"
+          ></button>
+        </div>
+      </div>
+
+      <!--<div class="popup popup-del">
+        <div class="popup__container">
+          <h2 class="popup__heading">Вы уверены?</h2>
+          <form name="form-del" class="form__del">
+            <fieldset class="popup__form">
+              <button
+                class="button button__save button__del-save"
+                type="submit"
+              >
+                Да
+              </button>
+            </fieldset>
+          </form>
+          <button
+            class="button button__close button__close-del"
+            type="button"
+            arial-label="Закрыть"
+          ></button>
+        </div>
+      </div>-->
 
       <template id="card-template">
         <li class="elements__item">

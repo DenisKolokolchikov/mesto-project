@@ -52,6 +52,21 @@ const formImage = document.querySelector('.form__image');
 const inputNameImg = document.querySelector('.name__img');
 const inputLinkImg = document.querySelector('.link__img');
 const addSaveButton = document.querySelector('.button__add-save');
+
+const profileAvatar = document.querySelector('.profile__avatar');
+const popupAvatar = document.querySelector('.popup-avatar');
+const formAvatar = popupAvatar.querySelector('.form__avatar');
+const buttonCloseAvatar = popupAvatar.querySelector('.button__close-avatar');
+const avatarInput = formAvatar.querySelector('.avatar__input');
+
+const popups = document.querySelectorAll('.popup');
+
+const activePopup = document.querySelector('.popup_opened');
+
+const formEditPopup = document.forms.form_edit;
+//const userName = formEditPopup.element.username;
+//const profession = formEditPopup.element.profession;
+
 //закрытие попап
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
@@ -60,6 +75,21 @@ function closePopup(popup) {
 function openPopup(popup) {
     popup.classList.add('popup_opened');
 }
+
+//открытие/закрытие попап аватар
+profileAvatar.addEventListener('click', function() {
+    openPopup(popupAvatar);
+});
+buttonCloseAvatar.addEventListener('click', function() {
+    closePopup(popupAvatar);
+});
+function submitFormAvatar(evt) {
+    evt.preventDefault();
+    profileAvatar.src = avatarInput.value;
+    closePopup(popupAvatar);
+}
+formAvatar.addEventListener('submit', submitFormAvatar);
+
 //открытие и закрытие попап
 editButton.addEventListener('click', function() {
     editPopupData(popupProfile);
@@ -92,7 +122,7 @@ function submitProfileForm(evt) {
     closePopup(popupProfile);
 }    
 
-formEdit.addEventListener('submit', submitProfileForm);
+formEditPopup.addEventListener('submit', submitProfileForm);
 
 //удаление карточки
 const handleClickButtonDelete = function(evt) {
@@ -104,6 +134,7 @@ const handleClickButtonLike = function(evt) {
     evt.target.classList.toggle('button__like-active');
 }
 
+//открытие большой картинки
 const handleClickImage = function(data) {
     popupPic.src = data.link;
     popupPic.alt = data.name;
@@ -146,7 +177,7 @@ initialCards.forEach(function(item) {
     renderCard(item, cardList); 
 });
 
-//подключение формы добывления картинки
+//подключение формы добавления картинки
 formImage.addEventListener('submit', function(evt) { 
     evt.preventDefault();
     const data = {
@@ -158,5 +189,37 @@ formImage.addEventListener('submit', function(evt) {
     popupNewImage.classList.remove('popup_opened'); 
     renderCard(data, cardList); 
 });
+
+//функция перебора попапов
+function popupArr() {
+    popups.forEach(function(popup) {
+        closePopup(popup)
+    });
+}
+
+//закрытие попапов кнопкой esc
+function keyHandler(evt) {
+    if(evt.key === 'Escape') {
+        popupArr()
+    }
+}
+
+document.addEventListener('keydown', keyHandler);
+
+//Закрытие попапов кликом по оверлей
+function oneClick(evt) {
+    if(evt.target.classList.contains('popup_opened')) {
+        document.removeEventListener('click', popupArr);
+        popupArr()
+    }
+}
+
+document.addEventListener('click', oneClick);
+
+
+
+
+
+
 
 

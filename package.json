@@ -1,0 +1,19 @@
+{
+  "name": "yandex_praktikum",
+  "version": "0.0.1",
+  "description": "Одностраничный сайт для закрепления навыков адаптивной верстки для маленького и большого экрана.\r Реализован функционал сайта после изучения основ языка программирования JavaScript.\r На данный момент пользователю доступно редактирование профиля, добавление, удаление и открытие картинки, реализация одного лайка.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DenisKolokolchikov/mesto-project.git"
+  },
+  "author": "Denis Kolokolchikov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DenisKolokolchikov/mesto-project/issues"
+  },
+  "homepage": "https://github.com/DenisKolokolchikov/mesto-project#readme"
+}

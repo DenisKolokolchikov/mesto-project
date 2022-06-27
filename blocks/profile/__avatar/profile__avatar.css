@@ -3,6 +3,7 @@
     max-height: 120px;
     border-radius: 50%;
     margin-right: 30px;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
