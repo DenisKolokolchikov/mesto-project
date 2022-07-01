@@ -56,3 +56,5 @@
 @import url('../blocks/form/__popup/form__popup.css');
 
 @import url('../blocks/popup/__label/popup__label.css');
+
+@import url('../blocks/profile/__avatar-overlay/profile__avatar-overlay.css');
