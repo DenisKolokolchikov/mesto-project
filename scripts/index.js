@@ -54,6 +54,7 @@ const inputLinkImg = document.querySelector('.link__img');
 const addSaveButton = document.querySelector('.button__add-save');
 
 const profileAvatar = document.querySelector('.profile__avatar');
+const profileAvatarOverlay = document.querySelector('.profile__avatar-overlay');
 const popupAvatar = document.querySelector('.popup__avatar');
 const formAvatar = popupAvatar.querySelector('.form__avatar');
 const buttonCloseAvatar = document.querySelector('.button__close-avatar');
@@ -75,7 +76,7 @@ function openPopup(popup) {
 }
 
 //открытие/закрытие попап аватар
-profileAvatar.addEventListener('click', function () {
+profileAvatarOverlay.addEventListener('click', function () {
     openPopup(popupAvatar);
 });
 buttonCloseAvatar.addEventListener('click', function () {
