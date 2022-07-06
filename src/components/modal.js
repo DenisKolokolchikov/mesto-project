@@ -1,4 +1,5 @@
 import { closePopup, openPopup } from "./utils";
+import { popups } from "..";
 
 export const profileAvatar = document.querySelector('.profile__avatar');
 export const popupAvatar = document.querySelector('.popup__avatar');
@@ -11,7 +12,7 @@ export const popupProfile = document.querySelector('.popup-profile');
 const popupImage = document.querySelector('.popup__type-image');
 const popupPic = popupImage.querySelector('.popup__big-image');
 const popupBigTitle = document.querySelector('.popup__big-title');
-const popups = document.querySelectorAll('.popup');
+
 export const profileAvatarOverlay = document.querySelector('.profile__avatar-overlay');
 
 //открытие/закрытие попап аватар
@@ -48,24 +49,10 @@ export const handleClickImageClose = function () {
     closePopup(popupImage);
 }
 
-//функция перебора попапов
-function popupArr() {
-    popups.forEach(function (popup) {
-        closePopup(popup)
-    });
-}
-
 //закрытие попапов кнопкой esc
-export function keyHandler(evt) {
+export function closeByEscape(evt) {
     if (evt.key === 'Escape') {
-        popupArr()
-    }
-}
-
-//Закрытие попапов кликом по оверлей
-export function oneClick(evt) {
-    if (evt.target.classList.contains('popup_opened')) {
-        document.removeEventListener('click', popupArr);
-        popupArr();
-    }
+        const openedPopup = document.querySelector('.popup_opened');
+       openedPopup.closePopup();
+    } 
 }
