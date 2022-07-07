@@ -34,6 +34,7 @@ editButton.addEventListener('click', function () {
 //подключение кнопки открытия попап для добавления картинок
 addButton.addEventListener('click', function () {
     openPopup(popupNewImage);
+    toggleButtonState(buttonAddSave, false, validationConfig);
 });
 
 
@@ -50,12 +51,9 @@ formImage.addEventListener('submit', function (evt) {
         link: inputLinkImg.value,
         name: inputNameImg.value,
     }
-    inputLinkImg.value = "";
-    inputNameImg.value = "";
+    formImage.reset();
     closePopup(popupNewImage); 
     renderCard(data, cardList);
-    //Блокируем форму повторной отправки
-    toggleButtonState(buttonAddSave, true, config.inactiveButtonClass);
 });
 
 //закрытие попапов кнопкой esc
