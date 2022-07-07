@@ -1,8 +1,8 @@
-const validationConfig = {
+export const validationConfig = {
     formSelector: '.form__popup',
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__button',
-    inactiveButtonClass: 'popup__button_invalid',
+    inactiveButtonClass: 'button__popup_invalid',
     inputErrorClass: 'popup__input_state_invalid',
   }
 
@@ -28,7 +28,7 @@ const checkInputValidity = (inputElement, formElement, config) => {
 }
 
 //Вкл/Выкл кнопки сохранить
-const toggleButtonState = (button, isActive = false, config) => {
+export const toggleButtonState = (button, isActive = false, config) => {
         if(isActive) {
             button.classList.remove(config.inactiveButtonClass);
             button.disabled = false;
@@ -38,11 +38,9 @@ const toggleButtonState = (button, isActive = false, config) => {
         }             
 }
 
-
-
 //Обработчики события
-   const setEventListener = (formElement, config) => {
-    const inputList = array.from(formElement.querySelectorAll(config.inputSelector));
+   export const setEventListener = (formElement, config) => {
+    const inputList = formElement.querySelectorAll(config.inputSelector);
     const submitButton = formElement.querySelector(config.submitButtonSelector);
     toggleButtonState(submitButton, formElement.checkValidity(), config);
 
@@ -59,13 +57,3 @@ const toggleButtonState = (button, isActive = false, config) => {
     });
 } 
 
-//Запускаем валидацию
-const enableValidation = (config) => {
-    const forms = document.querySelectorAll(config.formSelector);
-    forms.forEach(form => {
-        setEventListener(form, config); 
-    });
-}
-
-//Валидация 
-enableValidation(validationConfig); 

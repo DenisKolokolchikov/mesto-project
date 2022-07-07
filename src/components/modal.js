@@ -53,6 +53,6 @@ export const handleClickImageClose = function () {
 export function closeByEscape(evt) {
     if (evt.key === 'Escape') {
         const openedPopup = document.querySelector('.popup_opened');
-       openedPopup.closePopup();
+        closePopup(openedPopup);
     } 
 }

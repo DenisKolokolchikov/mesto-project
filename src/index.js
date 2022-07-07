@@ -2,7 +2,7 @@ import './pages/index.css';
 import { closePopup, openPopup } from './components/utils';
 import { submitFormAvatar, editPopupData, popupAvatar, popupProfile, submitProfileForm, handleClickImageClose, profileAvatarOverlay, closeByEscape } from './components/modal';
 import { cardList, renderCard } from './components/card';
-
+import { validationConfig, setEventListener, toggleButtonState } from './components/validate';
 
 const editButton = document.querySelector('.button__edit');
 const popupNewImage = document.querySelector('.popup-image');
@@ -14,6 +14,7 @@ const inputNameImg = document.querySelector('.name__img');
 const inputLinkImg = document.querySelector('.link__img');
 const formAvatar = document.querySelector('.form__avatar');
 export const popups = document.querySelectorAll('.popup');
+const buttonAddSave = document.querySelector('.button__add-save');
 
 //открытие/закрытие попап аватар
 profileAvatarOverlay.addEventListener('click', function () {
@@ -53,6 +54,8 @@ formImage.addEventListener('submit', function (evt) {
     inputNameImg.value = "";
     closePopup(popupNewImage); 
     renderCard(data, cardList);
+    //Блокируем форму повторной отправки
+    toggleButtonState(buttonAddSave, true, config.inactiveButtonClass);
 });
 
 //закрытие попапов кнопкой esc
@@ -69,4 +72,13 @@ popups.forEach((popup) => {
     });
 });
 
+//Запускаем валидацию
+const enableValidation = (config) => {
+    const forms = document.querySelectorAll(config.formSelector);
+    forms.forEach(form => {
+        setEventListener(form, config); 
+    });
+}
 
+//Валидация 
+enableValidation(validationConfig); 
