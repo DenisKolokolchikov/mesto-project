@@ -8,7 +8,6 @@ const editButton = document.querySelector('.button__edit');
 const popupNewImage = document.querySelector('.popup-image');
 const addButton = document.querySelector('.button__add');
 const formEdit = document.querySelector('.form__edit');
-const popupCloseImage = document.querySelector('.button__close-image');
 const formImage = document.querySelector('.form__image');
 const inputNameImg = document.querySelector('.name__img');
 const inputLinkImg = document.querySelector('.link__img');
@@ -40,9 +39,6 @@ addButton.addEventListener('click', function () {
 
 //редактирование имени и информации о себе
 formEdit.addEventListener('submit', submitProfileForm);
-
-//создаем функцию, которая добавляет карточку
-popupCloseImage.addEventListener('click', handleClickImageClose);
 
 //подключение формы добавления картинки
 formImage.addEventListener('submit', function (evt) {
