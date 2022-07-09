@@ -1,6 +1,7 @@
 import { handleClickImage } from "./modal";
+import { getInitialCards, removeCard } from "./api";
 
-const initialCards = [
+/* const initialCards = [
     {
         name: 'Архыз',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -25,14 +26,17 @@ const initialCards = [
         name: 'Байкал',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
-];
+]; */
 
 const cardTemplate = document.querySelector('#card-template').content.querySelector('.elements__item');
 export const cardList = document.querySelector('.elements__list');
 
 //удаление карточки
 const handleClickButtonDelete = function (evt) {
+//удаление карточки внутри then, а не за ним, потому что сервер может ответить ошибкой, а элемент уже из DOM удален
+removeCard(data._id).then(()=>{
     evt.target.closest('.elements__item').remove();
+})
 }
 
 //подключаю лайк
@@ -65,6 +69,11 @@ export const renderCard = function (data, container) {
     container.prepend(card);
 }
 
-initialCards.forEach(function (item) {
-    renderCard(item, cardList);
-});
+getInitialCards()
+    .then((initialCards)=>{
+        initialCards.forEach(function (item) {
+            renderCard(item, cardList);
+        });
+    })
+
+
