@@ -51,6 +51,8 @@
 @import url('../blocks/button/__close/button__close.css');
 @import url('../blocks/button/__popup/_invalid/button__popup_invalid.css');
 
+@import url('../blocks/photo/__like-counter/photo__like-counter.css');
+
 @import url('../blocks/error/error.css');
 
 @import url('../blocks/form/__popup/form__popup.css');

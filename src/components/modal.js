@@ -1,5 +1,6 @@
 import { closePopup, openPopup } from "./utils";
-import { popups } from "..";
+import { editInfoUser } from "./api";
+//import { popups } from "..";
 
 export const profileAvatar = document.querySelector('.profile__avatar');
 export const popupAvatar = document.querySelector('.popup__avatar');
@@ -30,6 +31,8 @@ export function editPopupData() {
 
 //редактирование имени и информации о себе
 export function submitProfileForm(evt) {
+    editInfoUser(nameInput.value, jobInput.value)
+    .catch((err)=> console.log(err))
     evt.preventDefault();
     profileTitle.textContent = nameInput.value;
     profileSubtitle.textContent = jobInput.value;

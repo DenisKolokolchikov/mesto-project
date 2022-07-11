@@ -1,9 +1,9 @@
 import './pages/index.css'; 
 import { closePopup, openPopup } from './components/utils';
-import { submitFormAvatar, editPopupData, popupAvatar, popupProfile, submitProfileForm, handleClickImageClose, profileAvatarOverlay, closeByEscape } from './components/modal';
-import { cardList, renderCard } from './components/card';
+import { submitFormAvatar, editPopupData, popupAvatar, popupProfile, submitProfileForm, profileAvatarOverlay, closeByEscape } from './components/modal';
+import { cardList, renderCard, handleChangeLikeStatus } from './components/card';
 import { validationConfig, setEventListener, toggleButtonState } from './components/validate';
-import { addNewCard, getAllUnfo } from './components/api';
+import { addNewCard, getAllUnfo, getInfoUser } from './components/api';
 
 const editButton = document.querySelector('.button__edit');
 const popupNewImage = document.querySelector('.popup-image');
@@ -21,7 +21,7 @@ profileAvatarOverlay.addEventListener('click', function () {
     openPopup(popupAvatar);
 });
 
-//открытие/закрытие попап аватар
+//закрытие попап аватар после редактирования
 formAvatar.addEventListener('submit', submitFormAvatar);
 
 //открытие и закрытие попап
@@ -30,6 +30,14 @@ editButton.addEventListener('click', function () {
     openPopup(popupProfile);
 });
 
+//загрузка инфо о пользователе с сервера
+getInfoUser()
+.then((profileInfo) => {
+    nameInput.value = profileInfo.textContent;
+    jobInput.value = profileInfo.textContent;
+    profileAvatar.src = profileInfo.value;
+})
+.catch((err)=> console.log(err))
 
 //подключение кнопки открытия попап для добавления картинок
 addButton.addEventListener('click', function () {
@@ -40,6 +48,8 @@ addButton.addEventListener('click', function () {
 
 //редактирование имени и информации о себе
 formEdit.addEventListener('submit', submitProfileForm);
+
+
 
 let userId = null;
 
@@ -53,6 +63,8 @@ getAllUnfo()
         });
     })
     .catch((err)=> console.log(err));
+
+    
 //подключение формы добавления картинки
 formImage.addEventListener('submit', function (evt) {
     evt.preventDefault();
@@ -62,11 +74,9 @@ formImage.addEventListener('submit', function (evt) {
     }
 addNewCard(newCard)
 .then((data) => {
-    renderCard(data, cardList, userId); 
+    renderCard(data, cardList, userId, handleChangeLikeStatus); 
 })
-.catch(() => {
-    console.log("Ошибка при добавлении карточки");
-  });
+.catch((err)=> console.log(err));
     formImage.reset();
     closePopup(popupNewImage);        
 });

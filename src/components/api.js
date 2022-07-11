@@ -7,9 +7,10 @@ const config = {
 }
 
 //отдельная функция для ответа ОК или не ОК
-const onResponse = (res) => { 
-    return res.ok ? res.json() : Promise.reject('Сервер не доступен');
+export const onResponse = (res) => { 
+    return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
 }
+
 //отображаем карточки с сервера
 export function getInitialCards() {
     return fetch(`${config.baseUrl}/cards`, {
@@ -38,7 +39,7 @@ export function addNewCard(data) {
 export function removeCard(cardId) {
     return fetch(`${config.baseUrl}/cards/${cardId}`, {
         method: 'DELETE',
-        headers: config.headers,
+        headers: config.headers
     })
     .then(onResponse)
 }
@@ -65,20 +66,20 @@ export function getInfoUser() {
 } 
 
 //добавляем лайк
-export function putLike(cardId) {
+/* export function putLike(cardId) {
     return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
       headers: config.headers
     });
-  }
+  } */
 
 //удаляем лайк
-export function deleteLike(cardId) {
+/* export function deleteLike(cardId) {
     return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
       method: 'DELETE',
       headers: config.headers
     });
-  }
+  } */
 
 //обновдение аватара
 export function patchAvatar(avatar) {
@@ -90,3 +91,11 @@ export function patchAvatar(avatar) {
       })
     });
   }
+
+export function changeLikeStatus(cardId, isLike) {
+    return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+        method: isLike ? "DELETE" : "PUT",
+        headers: config.headers
+    })
+    .then(onResponse)
+}
