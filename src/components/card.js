@@ -32,12 +32,9 @@ const cardTemplate = document.querySelector('#card-template').content.querySelec
 export const cardList = document.querySelector('.elements__list');
 
 //удаление карточки
-const handleClickButtonDelete = function (evt) {
-//удаление карточки внутри then, а не за ним, потому что сервер может ответить ошибкой, а элемент уже из DOM удален
-removeCard(data._id).then(()=>{
-    evt.target.closest('.elements__item').remove();
-})
-}
+/* const handleClickButtonDelete = function (evt) {  
+        evt.target.closest('.elements__item').remove();   
+} */
 
 //подключаю лайк
 const handleClickButtonLike = function (evt) {
@@ -53,7 +50,15 @@ const createCard = function (data) {
     const cardLike = cardElement.querySelector('.button__like');
 
     cardLike.addEventListener('click', handleClickButtonLike);
-    cardDelete.addEventListener('click', handleClickButtonDelete);
+
+    cardDelete.addEventListener('click', (evt) => {             //было handleClickButtonDelete
+    removeCard(data._id)
+        .then(()=> {
+        evt.target.closest('.elements__item').remove();
+        })
+        .catch((err)=> console.log(err))
+    });
+    
     cardImage.addEventListener('click', () => handleClickImage(data));
 
     cardName.textContent = data.name;
@@ -75,5 +80,7 @@ getInitialCards()
             renderCard(item, cardList);
         });
     })
+    .catch((err)=> console.log(err))
 
+   
 

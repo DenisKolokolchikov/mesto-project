@@ -8,7 +8,7 @@ const config = {
 
 //отдельная функция для ответа ОК или не ОК
 const onResponse = (res) => { 
-    return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+    return res.ok ? res.json() : Promise.reject('Сервер не доступен');
 }
 //отображаем карточки с сервера
 export function getInitialCards() {
@@ -20,24 +20,73 @@ export function getInitialCards() {
                         то код упадет, дальше выполняться не будет */ 
 }
 
+export function getAllUnfo() {
+    return Promise.all([getInitialCards(), getInfoUser()])
+}
+
 //добавляем новую карточку
-/* function addCard(cardName, cardLink) {
-    return fetch(config.baseUrl, {
+export function addNewCard(data) {
+    return fetch(`${config.baseUrl}/cards`, {
         method: 'POST',
         headers: config.headers,
-        body: JSON.stringify({ //обязательно в строку в data!
-            name: cardName,
-            link: cardLink
-        }) 
+        body: JSON.stringify(data) 
     })
     .then(onResponse)
-} */
+} 
 
 //удаление карточки
-export function removeCard(cardID) {
-    return fetch(`${config.baseUrl}/cards/${cardID}`, {
-        method: 'DELETE'
+export function removeCard(cardId) {
+    return fetch(`${config.baseUrl}/cards/${cardId}`, {
+        method: 'DELETE',
+        headers: config.headers,
     })
     .then(onResponse)
 }
 
+//редактирование инфо профиля
+export function editInfoUser(name, job) {
+    return fetch(`${config.baseUrl}/users/me`, {
+        method: 'PATCH',
+        headers: config.headers, 
+        body: JSON.stringify({
+            name: name,
+            about: job
+        })
+    })
+    .then(onResponse)
+} 
+
+//загрузка информации о пользователе
+export function getInfoUser() {
+    return fetch(`${config.baseUrl}/users/me`, {
+        headers: config.headers
+    })
+    .then(onResponse)
+} 
+
+//добавляем лайк
+export function putLike(cardId) {
+    return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+      method: 'PUT',
+      headers: config.headers
+    });
+  }
+
+//удаляем лайк
+export function deleteLike(cardId) {
+    return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+      method: 'DELETE',
+      headers: config.headers
+    });
+  }
+
+//обновдение аватара
+export function patchAvatar(avatar) {
+    return fetch(`${config.baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: config.headers,
+      body: JSON.stringify({
+      avatar: avatar
+      })
+    });
+  }

@@ -3,6 +3,7 @@ import { closePopup, openPopup } from './components/utils';
 import { submitFormAvatar, editPopupData, popupAvatar, popupProfile, submitProfileForm, handleClickImageClose, profileAvatarOverlay, closeByEscape } from './components/modal';
 import { cardList, renderCard } from './components/card';
 import { validationConfig, setEventListener, toggleButtonState } from './components/validate';
+import { addNewCard, getAllUnfo } from './components/api';
 
 const editButton = document.querySelector('.button__edit');
 const popupNewImage = document.querySelector('.popup-image');
@@ -40,16 +41,34 @@ addButton.addEventListener('click', function () {
 //редактирование имени и информации о себе
 formEdit.addEventListener('submit', submitProfileForm);
 
+let userId = null;
+
+getAllUnfo()
+    .then(([initialCards, user]) => {
+        nameInput.value = user.textContent;
+        jobInput.value = user.textContent;
+        userId = user._id;
+        initialCards.forEach(function (item) {
+            renderCard(item, cardList, userId);
+        });
+    })
+    .catch((err)=> console.log(err));
 //подключение формы добавления картинки
 formImage.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    const data = {
+    const newCard = {
         link: inputLinkImg.value,
-        name: inputNameImg.value,
+        name: inputNameImg.value
     }
+addNewCard(newCard)
+.then((data) => {
+    renderCard(data, cardList, userId); 
+})
+.catch(() => {
+    console.log("Ошибка при добавлении карточки");
+  });
     formImage.reset();
-    closePopup(popupNewImage); 
-    renderCard(data, cardList);
+    closePopup(popupNewImage);        
 });
 
 //закрытие попапов кнопкой esc
