@@ -5,7 +5,6 @@
     background-size: contain;
     border: none;
     background-color: transparent;
-    /*cursor: pointer;*/
     background-repeat: no-repeat; /*если убрать свойство, то появится черточки под сердечком, данное свойство убирает черточки, но высота родительского блока остается везде разной*/
 }
 

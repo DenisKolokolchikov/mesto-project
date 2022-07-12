@@ -1,6 +1,5 @@
 import { closePopup, openPopup } from "./utils";
 import { editInfoUser } from "./api";
-//import { popups } from "..";
 
 export const profileAvatar = document.querySelector('.profile__avatar');
 export const popupAvatar = document.querySelector('.popup__avatar');

@@ -1,7 +1,7 @@
 import './pages/index.css'; 
 import { closePopup, openPopup } from './components/utils';
 import { submitFormAvatar, editPopupData, popupAvatar, popupProfile, submitProfileForm, profileAvatarOverlay, closeByEscape } from './components/modal';
-import { cardList, renderCard, handleChangeLikeStatus } from './components/card';
+import { cardList, renderCard } from './components/card';
 import { validationConfig, setEventListener, toggleButtonState } from './components/validate';
 import { addNewCard, getAllUnfo, getInfoUser } from './components/api';
 
@@ -49,8 +49,6 @@ addButton.addEventListener('click', function () {
 //редактирование имени и информации о себе
 formEdit.addEventListener('submit', submitProfileForm);
 
-
-
 let userId = null;
 
 getAllUnfo()
@@ -74,7 +72,7 @@ formImage.addEventListener('submit', function (evt) {
     }
 addNewCard(newCard)
 .then((data) => {
-    renderCard(data, cardList, userId, handleChangeLikeStatus); 
+    renderCard(data, cardList, userId); 
 })
 .catch((err)=> console.log(err));
     formImage.reset();

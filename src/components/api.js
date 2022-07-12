@@ -92,6 +92,7 @@ export function patchAvatar(avatar) {
     });
   }
 
+//Добавляем и удаляем лайк
 export function changeLikeStatus(cardId, isLike) {
     return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
         method: isLike ? "DELETE" : "PUT",
