@@ -17,9 +17,11 @@ export const profileAvatarOverlay = document.querySelector('.profile__avatar-ove
 
 //открытие/закрытие попап аватар
 export function submitFormAvatar(evt) {
+    
     evt.preventDefault();
     profileAvatar.src = avatarInput.value;
     closePopup(popupAvatar);
+    
 }
 
 //подключение кнопки открытия попап для добавления картинок
@@ -30,12 +32,14 @@ export function editPopupData() {
 
 //редактирование имени и информации о себе
 export function submitProfileForm(evt) {
+    
     editInfoUser(nameInput.value, jobInput.value)
     .catch((err)=> console.log(err))
     evt.preventDefault();
     profileTitle.textContent = nameInput.value;
     profileSubtitle.textContent = jobInput.value;
     closePopup(popupProfile);
+    
 }
 
 //открытие большой картинки
@@ -58,3 +62,4 @@ export function closeByEscape(evt) {
         closePopup(openedPopup);
     } 
 }
+

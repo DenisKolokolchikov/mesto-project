@@ -39,16 +39,16 @@ const createCard = function (data, userId) {
     const cardName = cardElement.querySelector('.elements__title');
     const cardDelete = cardElement.querySelector('.button__del');
     const cardLike = cardElement.querySelector('.button__like');
-
+    
     cardName.textContent = data.name;
     cardImage.src = data.link;
     cardImage.alt = data.name;
    
     updateLikeButton(cardElement, data.likes, userId)
 
-    if(data.owner._id !== userId) {
+   /*  if(data.owner._id !== userId) {
         cardDelete.remove();
-    }
+    } */
 
     cardLike.addEventListener('click', ()=> 
         handleChangeLikesStatus(cardElement, data._id, cardLike.classList.contains('button__like-active'))

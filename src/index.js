@@ -3,7 +3,7 @@ import { closePopup, openPopup } from './components/utils';
 import { submitFormAvatar, editPopupData, popupAvatar, popupProfile, submitProfileForm, profileAvatarOverlay, closeByEscape } from './components/modal';
 import { cardList, renderCard } from './components/card';
 import { validationConfig, setEventListener, toggleButtonState } from './components/validate';
-import { addNewCard, getAllUnfo, getInfoUser } from './components/api';
+import { addNewCard, getAllUnfo, getInfoUser, getInitialCards } from './components/api';
 
 const editButton = document.querySelector('.button__edit');
 const popupNewImage = document.querySelector('.popup-image');
@@ -23,7 +23,7 @@ profileAvatarOverlay.addEventListener('click', function () {
 
 //закрытие попап аватар после редактирования
 formAvatar.addEventListener('submit', submitFormAvatar);
-
+changeLoading(true, formAvatar);
 //открытие и закрытие попап
 editButton.addEventListener('click', function () {
     editPopupData(popupProfile);
@@ -45,20 +45,21 @@ addButton.addEventListener('click', function () {
     toggleButtonState(buttonAddSave, false, validationConfig);
 });
 
-
 //редактирование имени и информации о себе
 formEdit.addEventListener('submit', submitProfileForm);
 
 let userId = null;
 
 getAllUnfo()
-    .then(([initialCards, user]) => {
-        nameInput.value = user.textContent;
+    .then(() => {   //был user
+        getInfoUser();
+        /* nameInput.value = user.textContent;
         jobInput.value = user.textContent;
-        userId = user._id;
-        initialCards.forEach(function (item) {
+        userId = user._id; */
+        getInitialCards();
+        /* initialCards.forEach(function (item) {
             renderCard(item, cardList, userId);
-        });
+        }); */
     })
     .catch((err)=> console.log(err));
 
@@ -103,3 +104,12 @@ const enableValidation = (config) => {
 
 //Валидация 
 enableValidation(validationConfig); 
+
+//Улучшение UX форм
+function changeLoading(isLoading, place) {
+    if(isLoading) {
+        place.querySelector('.form__submit').textContent = "Сохранение...";
+    } else {
+        place.querySelector('.form__submit').textContent = "Сохраненить";
+    }
+}
