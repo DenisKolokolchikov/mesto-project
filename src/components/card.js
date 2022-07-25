@@ -1,5 +1,5 @@
 import { handleClickImage } from "./modal";
-import { getInitialCards, removeCard, changeLikeStatus } from "./api";
+import { removeCard, changeLikeStatus } from "./api";
 
 const cardTemplate = document.querySelector('#card-template').content.querySelector('.elements__item');
 export const cardList = document.querySelector('.elements__list');
@@ -16,6 +16,7 @@ const updateLikeButton = (cardElement, likesArray, userId) => {
     const cardLike = cardElement.querySelector('.button__like');
     const likeCounter = cardElement.querySelector('.photo__like-counter');
     likeCounter.textContent = likesArray.length;
+    console.log(userId);
     if(isLiked(likesArray, userId)) {
         cardLike.classList.add('button__like-active');
     } else {
@@ -27,7 +28,7 @@ const updateLikeButton = (cardElement, likesArray, userId) => {
  const handleChangeLikesStatus = (cardElement, cardId, isLiked, userId) => {
     changeLikeStatus(cardId, isLiked)
         .then((dataFromServer) => {
-            updateLikeButton(cardElement, cardId, dataFromServer.likes, userId)
+            updateLikeButton(cardElement, dataFromServer.likes, userId)
         })   
         .catch((err)=> console.log(err))  
 }
@@ -51,7 +52,7 @@ const createCard = function (data, userId) {
     } */
 
     cardLike.addEventListener('click', ()=> 
-        handleChangeLikesStatus(cardElement, data._id, cardLike.classList.contains('button__like-active'))
+        handleChangeLikesStatus(cardElement, data._id, cardLike.classList.contains('button__like-active'), userId)
     );
 
     cardDelete.addEventListener('click', (evt) => {             
@@ -67,19 +68,12 @@ const createCard = function (data, userId) {
 }
 
 //рендерим карточки
-export const renderCard = function (data, container) {
-    const card = createCard(data, handleChangeLikesStatus);
+export const renderCard = function (data, container, userId) {
+    const card = createCard(data, userId);
     container.prepend(card);
 }
 
-//отображение всех карточек
-getInitialCards()
-    .then((initialCards)=>{
-        initialCards.forEach(function (item) {
-            renderCard(item, cardList);
-        }); 
-    })
-.catch((err)=> console.log(err))
+
 
   
 

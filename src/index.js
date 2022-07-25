@@ -3,7 +3,7 @@ import { closePopup, openPopup } from './components/utils';
 import { submitFormAvatar, editPopupData, popupAvatar, popupProfile, submitProfileForm, profileAvatarOverlay, closeByEscape } from './components/modal';
 import { cardList, renderCard } from './components/card';
 import { validationConfig, setEventListener, toggleButtonState } from './components/validate';
-import { addNewCard, getAllUnfo, getInfoUser, getInitialCards } from './components/api';
+import { addNewCard, getAllUnfo } from './components/api';
 
 const editButton = document.querySelector('.button__edit');
 const popupNewImage = document.querySelector('.popup-image');
@@ -15,7 +15,8 @@ const inputLinkImg = document.querySelector('.link__img');
 const formAvatar = document.querySelector('.form__avatar');
 export const popups = document.querySelectorAll('.popup');
 const buttonAddSave = document.querySelector('.button__add-save');
-
+const nameInput = document.querySelector('.profile__title');
+const jobInput = document.querySelector('.profile__subtitle');
 //открытие/закрытие попап аватар
 profileAvatarOverlay.addEventListener('click', function () {
     openPopup(popupAvatar);
@@ -23,21 +24,12 @@ profileAvatarOverlay.addEventListener('click', function () {
 
 //закрытие попап аватар после редактирования
 formAvatar.addEventListener('submit', submitFormAvatar);
-changeLoading(true, formAvatar);
+
 //открытие и закрытие попап
 editButton.addEventListener('click', function () {
     editPopupData(popupProfile);
     openPopup(popupProfile);
 });
-
-//загрузка инфо о пользователе с сервера
-getInfoUser()
-.then((profileInfo) => {
-    nameInput.value = profileInfo.textContent;
-    jobInput.value = profileInfo.textContent;
-    profileAvatar.src = profileInfo.value;
-})
-.catch((err)=> console.log(err))
 
 //подключение кнопки открытия попап для добавления картинок
 addButton.addEventListener('click', function () {
@@ -51,19 +43,16 @@ formEdit.addEventListener('submit', submitProfileForm);
 let userId = null;
 
 getAllUnfo()
-    .then(() => {   //был user
-        getInfoUser();
-        /* nameInput.value = user.textContent;
-        jobInput.value = user.textContent;
-        userId = user._id; */
-        getInitialCards();
-        /* initialCards.forEach(function (item) {
+    .then(([initialCards, user]) => {   
+        nameInput.textContent = user.name;
+        jobInput.textContent = user.about;
+        userId = user._id;
+        initialCards.forEach(function (item) {
             renderCard(item, cardList, userId);
-        }); */
+        });
     })
     .catch((err)=> console.log(err));
 
-    
 //подключение формы добавления картинки
 formImage.addEventListener('submit', function (evt) {
     evt.preventDefault();
@@ -83,6 +72,7 @@ addNewCard(newCard)
 //закрытие попапов кнопкой esc
 document.addEventListener('keydown', closeByEscape);
 
+//объединение закрытие попав крестиком и мышкой
 popups.forEach((popup) => {
     popup.addEventListener('mousedown', (evt) => {
         if (evt.target.classList.contains('popup_opened')) {
@@ -105,11 +95,3 @@ const enableValidation = (config) => {
 //Валидация 
 enableValidation(validationConfig); 
 
-//Улучшение UX форм
-function changeLoading(isLoading, place) {
-    if(isLoading) {
-        place.querySelector('.form__submit').textContent = "Сохранение...";
-    } else {
-        place.querySelector('.form__submit').textContent = "Сохраненить";
-    }
-}

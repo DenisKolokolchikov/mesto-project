@@ -12,16 +12,13 @@ export const popupProfile = document.querySelector('.popup-profile');
 const popupImage = document.querySelector('.popup__type-image');
 const popupPic = popupImage.querySelector('.popup__big-image');
 const popupBigTitle = document.querySelector('.popup__big-title');
-
 export const profileAvatarOverlay = document.querySelector('.profile__avatar-overlay');
 
 //открытие/закрытие попап аватар
 export function submitFormAvatar(evt) {
-    
     evt.preventDefault();
     profileAvatar.src = avatarInput.value;
-    closePopup(popupAvatar);
-    
+    closePopup(popupAvatar);   
 }
 
 //подключение кнопки открытия попап для добавления картинок
@@ -32,7 +29,6 @@ export function editPopupData() {
 
 //редактирование имени и информации о себе
 export function submitProfileForm(evt) {
-    
     editInfoUser(nameInput.value, jobInput.value)
     .catch((err)=> console.log(err))
     evt.preventDefault();
@@ -63,3 +59,11 @@ export function closeByEscape(evt) {
     } 
 }
 
+//Улучшение UX форм
+/* function changeLoading(isLoading, place) {
+    if(isLoading) {
+        place.querySelector('.form__submit').textContent = "Сохранение...";
+    } else {
+        place.querySelector('.form__submit').textContent = "Сохраненить";
+    }
+} */
