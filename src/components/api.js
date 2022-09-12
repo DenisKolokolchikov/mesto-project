@@ -16,9 +16,7 @@ export function getInitialCards() {
     return fetch(`${config.baseUrl}/cards`, {
         headers: config.headers,
     })
-    .then(onResponse)   /* второй аргумент возможно нужен, если promise вернул состояние rejected
-                        catch используем в конце цепочки promise, иначе если выпадет исключение внутри .then, 
-                        то код упадет, дальше выполняться не будет */ 
+    .then(onResponse)    
 }
 
 export function getAllUnfo() {
