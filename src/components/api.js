@@ -4,7 +4,7 @@ const config = {
         "Content-type": 'application/json',
         authorization: 'ce578aeb-a49b-4df4-9aa2-77f24f46d839'
     },
-}
+}             
 
 //отдельная функция для ответа ОК или не ОК
 export const onResponse = (res) => { 
