@@ -6,6 +6,8 @@ const config = {
     },
 }             
 
+//    2b8d2e32-f428-4578-8dc4-d80d04887d6e
+
 //отдельная функция для ответа ОК или не ОК
 export const onResponse = (res) => { 
     return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
@@ -62,22 +64,6 @@ export function getInfoUser() {
     })
     .then(onResponse)
 } 
-
-//добавляем лайк
-/* export function putLike(cardId) {
-    return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-      method: 'PUT',
-      headers: config.headers
-    });
-  } */
-
-//удаляем лайк
-/* export function deleteLike(cardId) {
-    return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-      method: 'DELETE',
-      headers: config.headers
-    });
-  } */
 
 //обновдение аватара
 export function patchAvatar(avatar) {

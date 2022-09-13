@@ -3,7 +3,7 @@ import { editInfoUser } from "./api";
 
 export const profileAvatar = document.querySelector('.profile__avatar');
 export const popupAvatar = document.querySelector('.popup__avatar');
-const avatarInput = document.querySelector('.avatar__input');
+export const avatarInput = document.querySelector('.avatar__input');
 const nameInput = document.querySelector('.name__input');
 const jobInput = document.querySelector('.job__input');
 const profileTitle = document.querySelector('.profile__title');
@@ -15,11 +15,11 @@ const popupBigTitle = document.querySelector('.popup__big-title');
 export const profileAvatarOverlay = document.querySelector('.profile__avatar-overlay');
 
 //открытие/закрытие попап аватар
-export function submitFormAvatar(evt) {
+/* export function submitFormAvatar(evt) {
     evt.preventDefault();
     profileAvatar.src = avatarInput.value;
-    closePopup(popupAvatar);   
-}
+    closePopup(popupAvatar);  
+} */
 
 //подключение кнопки открытия попап для добавления картинок
 export function editPopupData() {
@@ -58,6 +58,12 @@ export function closeByEscape(evt) {
         closePopup(openedPopup);
     } 
 }
+
+export const setUserInfo = ({userName, userDescription, userAvatar}) => {
+    if(userName) profileTitle.textContent = userName;
+    if(userDescription) profileSubtitle.textContent = userDescription;
+    if(userAvatar) profileAvatar.src = userAvatar;
+};
 
 //Улучшение UX форм
 /* function changeLoading(isLoading, place) {
