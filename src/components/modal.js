@@ -15,11 +15,11 @@ const popupBigTitle = document.querySelector('.popup__big-title');
 export const profileAvatarOverlay = document.querySelector('.profile__avatar-overlay');
 
 //открытие/закрытие попап аватар
-/* export function submitFormAvatar(evt) {
+export function submitFormAvatar(evt) {
     evt.preventDefault();
     profileAvatar.src = avatarInput.value;
     closePopup(popupAvatar);  
-} */
+} 
 
 //подключение кнопки открытия попап для добавления картинок
 export function editPopupData() {

@@ -6,7 +6,7 @@ const config = {
     },
 }             
 
-//    2b8d2e32-f428-4578-8dc4-d80d04887d6e
+//      2b8d2e32-f428-4578-8dc4-d80d04887d6e
 
 //отдельная функция для ответа ОК или не ОК
 export const onResponse = (res) => { 
@@ -73,7 +73,8 @@ export function patchAvatar(avatar) {
       body: JSON.stringify({
       avatar: avatar
       })
-    });
+    })
+    .then(onResponse)
   }
 
 //Добавляем и удаляем лайк

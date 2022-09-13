@@ -1,6 +1,6 @@
 import './pages/index.css'; 
 import { closePopup, openPopup } from './components/utils';
-import { /* submitFormAvatar,  */editPopupData, popupAvatar, popupProfile, submitProfileForm, profileAvatarOverlay, closeByEscape, avatarInput, setUserInfo } from './components/modal';
+import { submitFormAvatar, editPopupData, popupAvatar, popupProfile, submitProfileForm, profileAvatarOverlay, closeByEscape, avatarInput, setUserInfo } from './components/modal';
 import { cardList, renderCard } from './components/card';
 import { validationConfig, setEventListener, toggleButtonState } from './components/validate';
 import { addNewCard, getAllUnfo, patchAvatar } from './components/api';
@@ -42,42 +42,6 @@ addButton.addEventListener('click', function () {
 formEdit.addEventListener('submit', submitProfileForm);
 
 let userId = null;
-
-/* getAllUnfo()
-    .then(([initialCards, user]) => {   
-        nameInput.textContent = user.name;
-        jobInput.textContent = user.about;
-        userId = user._id;
-        initialCards.forEach(function (item) {
-            renderCard(item, cardList, userId);
-        });
-    })
-    .catch((err)=> console.log(err)); */
-  
-
-function submitFormAvatar(event) {
-        event.preventDefault();
-        patchAvatar(avatarInput.value)
-            .then((user) => {
-                setUserInfo({
-                    userAvatar: user.avatar
-                });
-                closePopup(popupAvatar);
-        console.log('аватар обновлен')
-       
-            })
-    .catch((err)=> console.log(err));
-}   
-
-/* patchAvatar(avatarInput.value)
-    .then((user) => {
-        setUserInfo({
-            userAvatar: user.avatar
-        });
-        console.log('аватар обновлен')
-       
-    })
-    .catch((err)=> console.log(err)); */
 
 getAllUnfo()
     .then(([initialCards, user]) => {
