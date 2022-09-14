@@ -1,5 +1,6 @@
 import { closePopup, openPopup } from "./utils";
-import { editInfoUser } from "./api";
+import { editInfoUser, patchAvatar } from "./api";
+
 
 export const profileAvatar = document.querySelector('.profile__avatar');
 export const popupAvatar = document.querySelector('.popup__avatar');
@@ -15,11 +16,22 @@ const popupBigTitle = document.querySelector('.popup__big-title');
 export const profileAvatarOverlay = document.querySelector('.profile__avatar-overlay');
 
 //открытие/закрытие попап аватар
-export function submitFormAvatar(evt) {
+/* export function submitFormAvatar(evt) {
     evt.preventDefault();
     profileAvatar.src = avatarInput.value;
     closePopup(popupAvatar);  
-} 
+}  */
+
+/* export function submitFormAvatar(evt) {
+    evt.preventDefault();
+    patchAvatar(avatarInput.value)
+        .then((userAvatar)=>{
+            setUserInfo({userAvatar: userAvatar.avatar})
+        })
+        .catch((err)=> console.log(err));
+        
+        closePopup(popupAvatar);         
+}  */
 
 //подключение кнопки открытия попап для добавления картинок
 export function editPopupData() {

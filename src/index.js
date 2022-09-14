@@ -1,6 +1,6 @@
 import './pages/index.css'; 
 import { closePopup, openPopup } from './components/utils';
-import { submitFormAvatar, editPopupData, popupAvatar, popupProfile, submitProfileForm, profileAvatarOverlay, closeByEscape, avatarInput, setUserInfo } from './components/modal';
+import { /* submitFormAvatar, */ editPopupData, popupAvatar, popupProfile, submitProfileForm, profileAvatarOverlay, closeByEscape, setUserInfo, avatarInput } from './components/modal';
 import { cardList, renderCard } from './components/card';
 import { validationConfig, setEventListener, toggleButtonState } from './components/validate';
 import { addNewCard, getAllUnfo, patchAvatar } from './components/api';
@@ -13,20 +13,44 @@ const formImage = document.querySelector('.form__image');
 const inputNameImg = document.querySelector('.name__img');
 const inputLinkImg = document.querySelector('.link__img');
 const formAvatar = document.querySelector('.form__avatar');
-export const popups = document.querySelectorAll('.popup');
+const popups = document.querySelectorAll('.popup');
 const buttonAddSave = document.querySelector('.button__add-save');
-/* const nameInput = document.querySelector('.profile__title');
-const jobInput = document.querySelector('.profile__subtitle'); */
+const buttonAvatarSave = document.querySelector('.button__avatar-save');
 
 //открытие/закрытие попап аватар
 profileAvatarOverlay.addEventListener('click', function () {
     openPopup(popupAvatar);
+    toggleButtonState(buttonAvatarSave, false, validationConfig);
 });
 
-//закрытие попап аватар после редактирования  
-formAvatar.addEventListener('submit', submitFormAvatar);
 
-//открытие и закрытие попап
+/* function submitFormAvatar(evt) {
+    evt.preventDefault();
+    patchAvatar(avatarInput.value)
+        .then((userAvatar)=>{
+            setUserInfo({userAvatar: userAvatar.avatar})
+        })
+        .catch((err)=> console.log(err));
+        formAvatar.reset();
+        closePopup(popupAvatar);         
+} */ 
+
+//закрытие попап аватар после редактирования  
+/* formAvatar.addEventListener('submit', submitFormAvatar); */
+
+//закрытие попап аватар после редактирования 
+formAvatar.addEventListener('submit', function(evt){
+    evt.preventDefault();
+    patchAvatar(avatarInput.value)
+        .then((userAvatar)=>{
+            setUserInfo({userAvatar: userAvatar.avatar})
+        })
+        .catch((err)=> console.log(err));
+        formAvatar.reset();
+        closePopup(popupAvatar);         
+});
+
+//открытие и закрытие попап 
 editButton.addEventListener('click', function () {
     editPopupData(popupProfile);
     openPopup(popupProfile);
@@ -48,7 +72,7 @@ getAllUnfo()
         setUserInfo({
             userName: user.name,
             userDescription: user.about,
-            /* userAvatar: user.avatar */
+            userAvatar: user.avatar
         });
         userId = user._id;
         initialCards.forEach(function (item) {
