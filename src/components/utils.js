@@ -11,3 +11,15 @@ export function openPopup(popup) {
     document.addEventListener('keydown', closeByEscape); 
 }
 
+//Улучшение UX форм
+/* export function changeLoading(isLoading, place) {
+    if(isLoading) {
+        place.querySelector('.button__save').textContent = "Сохранение...";
+    } else {
+        place.querySelector('.button__save').textContent = "Сохраненить";
+    }
+} */
+
+export function changeLoading(isLoading) {
+    buttonSave.querySelector('.button__save').textContent = isLoading ? "Сохранение..." : "Сохраненить";
+}

@@ -1,5 +1,5 @@
 import './pages/index.css'; 
-import { closePopup, openPopup } from './components/utils';
+import { closePopup, openPopup, changeLoading } from './components/utils';
 import { /* submitFormAvatar, */ editPopupData, popupAvatar, popupProfile, submitProfileForm, profileAvatarOverlay, closeByEscape, setUserInfo, avatarInput } from './components/modal';
 import { cardList, renderCard } from './components/card';
 import { validationConfig, setEventListener, toggleButtonState } from './components/validate';
@@ -40,12 +40,15 @@ profileAvatarOverlay.addEventListener('click', function () {
 
 //закрытие попап аватар после редактирования 
 formAvatar.addEventListener('submit', function(evt){
-    evt.preventDefault();
+    evt.preventDefault(); 
+    formAvatar.changeLoading(true)
     patchAvatar(avatarInput.value)
+    
         .then((userAvatar)=>{
             setUserInfo({userAvatar: userAvatar.avatar})
         })
-        .catch((err)=> console.log(err));
+        .catch((err)=> console.log(err))  
+        .finally(()=>formAvatar.changeLoading(false))    
         formAvatar.reset();
         closePopup(popupAvatar);         
 });

@@ -1,5 +1,5 @@
 import { closePopup, openPopup } from "./utils";
-import { editInfoUser, patchAvatar } from "./api";
+import { editInfoUser } from "./api";
 
 
 export const profileAvatar = document.querySelector('.profile__avatar');
@@ -78,10 +78,10 @@ export const setUserInfo = ({userName, userDescription, userAvatar}) => {
 };
 
 //Улучшение UX форм
-/* function changeLoading(isLoading, place) {
+export function changeLoading(isLoading, place) {
     if(isLoading) {
-        place.querySelector('.form__submit').textContent = "Сохранение...";
+        place.querySelector('.button__save').textContent = "Сохранение...";
     } else {
-        place.querySelector('.form__submit').textContent = "Сохраненить";
+        place.querySelector('.button__save').textContent = "Сохраненить";
     }
-} */
+}
