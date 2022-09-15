@@ -1,12 +1,12 @@
 const config = {
-    baseUrl: "https://nomoreparties.co/v1/plus-cohort-13",
+    baseUrl: "https://nomoreparties.co/v1/plus-cohort-15",
     headers: {
         "Content-type": 'application/json',
-        authorization: 'ce578aeb-a49b-4df4-9aa2-77f24f46d839'
+        authorization: '2b8d2e32-f428-4578-8dc4-d80d04887d6e'
     },
 }             
 
-//      2b8d2e32-f428-4578-8dc4-d80d04887d6e
+//ce578aeb-a49b-4df4-9aa2-77f24f46d839 старый токен когорта-13
 
 //отдельная функция для ответа ОК или не ОК
 export const onResponse = (res) => { 
