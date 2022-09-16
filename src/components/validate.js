@@ -18,7 +18,7 @@ const hideError = (errorElement, inputElement, config) => {
 
 //Проверяем на валидность
 const checkInputValidity = (inputElement, formElement, config) => {
-    const isInputValid = inputElement.validity.valid; // false невалидно
+    const isInputValid = inputElement.validity.valid; 
     const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
     if(!isInputValid) {
         showError(errorElement, inputElement, config);
@@ -42,11 +42,10 @@ export const toggleButtonState = (button, isActive = false, config) => {
    export const setEventListener = (formElement, config) => {
     const inputList = formElement.querySelectorAll(config.inputSelector);
     const submitButton = formElement.querySelector(config.submitButtonSelector);
-    toggleButtonState(submitButton, formElement.checkValidity(), config);
+    toggleButtonState(submitButton, formElement.checkValidity(), config); 
 
     formElement.addEventListener('submit', (evt) => {
         evt.preventDefault();
-        console.log('Yes');
     });
 
     inputList.forEach(input => {

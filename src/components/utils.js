@@ -1,5 +1,7 @@
 import { closeByEscape } from "./modal";
 
+export const saveButtons = document.querySelectorAll('.button__save');
+
 //закрытие попап
 export function closePopup(popup) {
     popup.classList.remove('popup_opened');
@@ -12,14 +14,13 @@ export function openPopup(popup) {
 }
 
 //Улучшение UX форм
-/* export function changeLoading(isLoading, place) {
-    if(isLoading) {
-        place.querySelector('.button__save').textContent = "Сохранение...";
-    } else {
-        place.querySelector('.button__save').textContent = "Сохраненить";
-    }
-} */
-
-export function changeLoading(isLoading) {
-    buttonSave.querySelector('.button__save').textContent = isLoading ? "Сохранение..." : "Сохраненить";
+export function changeLoading(isLoading, saveButtons) {
+    saveButtons.forEach((saveButton) => {
+        if(isLoading) {
+            saveButton.textContent = "Сохранение...";
+        } else {
+            saveButton.textContent = "Сохранить";
+        }
+    });
+    
 }

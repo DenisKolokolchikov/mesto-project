@@ -1,6 +1,6 @@
 import './pages/index.css'; 
-import { closePopup, openPopup, changeLoading } from './components/utils';
-import { /* submitFormAvatar, */ editPopupData, popupAvatar, popupProfile, submitProfileForm, profileAvatarOverlay, closeByEscape, setUserInfo, avatarInput } from './components/modal';
+import { closePopup, openPopup, changeLoading, saveButtons } from './components/utils';
+import { editPopupData, popupAvatar, popupProfile, submitProfileForm, profileAvatarOverlay, closeByEscape, setUserInfo, avatarInput } from './components/modal';
 import { cardList, renderCard } from './components/card';
 import { validationConfig, setEventListener, toggleButtonState } from './components/validate';
 import { addNewCard, getAllUnfo, patchAvatar } from './components/api';
@@ -23,32 +23,16 @@ profileAvatarOverlay.addEventListener('click', function () {
     toggleButtonState(buttonAvatarSave, false, validationConfig);
 });
 
-
-/* function submitFormAvatar(evt) {
-    evt.preventDefault();
-    patchAvatar(avatarInput.value)
-        .then((userAvatar)=>{
-            setUserInfo({userAvatar: userAvatar.avatar})
-        })
-        .catch((err)=> console.log(err));
-        formAvatar.reset();
-        closePopup(popupAvatar);         
-} */ 
-
-//закрытие попап аватар после редактирования  
-/* formAvatar.addEventListener('submit', submitFormAvatar); */
-
 //закрытие попап аватар после редактирования 
 formAvatar.addEventListener('submit', function(evt){
     evt.preventDefault(); 
-    formAvatar.changeLoading(true)
+    changeLoading(true, saveButtons);
     patchAvatar(avatarInput.value)
-    
         .then((userAvatar)=>{
             setUserInfo({userAvatar: userAvatar.avatar})
         })
-        .catch((err)=> console.log(err))  
-        .finally(()=>formAvatar.changeLoading(false))    
+        .catch((err)=> console.log(err))   
+        .finally(()=>changeLoading(false, saveButtons));   
         formAvatar.reset();
         closePopup(popupAvatar);         
 });
@@ -87,6 +71,7 @@ getAllUnfo()
 //подключение формы добавления картинки
 formImage.addEventListener('submit', function (evt) {
     evt.preventDefault();
+    changeLoading(true, saveButtons);
     const newCard = {
         link: inputLinkImg.value,
         name: inputNameImg.value
@@ -95,7 +80,8 @@ addNewCard(newCard)
 .then((data) => {
     renderCard(data, cardList, userId); 
 })
-.catch((err)=> console.log(err));
+.catch((err)=> console.log(err))
+.finally(()=>changeLoading(false, saveButtons));
     formImage.reset();
     closePopup(popupNewImage);        
 });

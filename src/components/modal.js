@@ -1,4 +1,4 @@
-import { closePopup, openPopup } from "./utils";
+import { closePopup, openPopup, changeLoading, saveButtons } from "./utils";
 import { editInfoUser } from "./api";
 
 
@@ -15,24 +15,6 @@ const popupPic = popupImage.querySelector('.popup__big-image');
 const popupBigTitle = document.querySelector('.popup__big-title');
 export const profileAvatarOverlay = document.querySelector('.profile__avatar-overlay');
 
-//открытие/закрытие попап аватар
-/* export function submitFormAvatar(evt) {
-    evt.preventDefault();
-    profileAvatar.src = avatarInput.value;
-    closePopup(popupAvatar);  
-}  */
-
-/* export function submitFormAvatar(evt) {
-    evt.preventDefault();
-    patchAvatar(avatarInput.value)
-        .then((userAvatar)=>{
-            setUserInfo({userAvatar: userAvatar.avatar})
-        })
-        .catch((err)=> console.log(err));
-        
-        closePopup(popupAvatar);         
-}  */
-
 //подключение кнопки открытия попап для добавления картинок
 export function editPopupData() {
     nameInput.value = profileTitle.textContent;
@@ -41,9 +23,11 @@ export function editPopupData() {
 
 //редактирование имени и информации о себе
 export function submitProfileForm(evt) {
+    evt.preventDefault();
+    changeLoading(true, saveButtons);
     editInfoUser(nameInput.value, jobInput.value)
     .catch((err)=> console.log(err))
-    evt.preventDefault();
+    .finally(()=>changeLoading(false, saveButtons));
     profileTitle.textContent = nameInput.value;
     profileSubtitle.textContent = jobInput.value;
     closePopup(popupProfile);
@@ -71,17 +55,10 @@ export function closeByEscape(evt) {
     } 
 }
 
+//получение данных о пользователе
 export const setUserInfo = ({userName, userDescription, userAvatar}) => {
     if(userName) profileTitle.textContent = userName;
     if(userDescription) profileSubtitle.textContent = userDescription;
     if(userAvatar) profileAvatar.src = userAvatar;
 };
 
-//Улучшение UX форм
-export function changeLoading(isLoading, place) {
-    if(isLoading) {
-        place.querySelector('.button__save').textContent = "Сохранение...";
-    } else {
-        place.querySelector('.button__save').textContent = "Сохраненить";
-    }
-}

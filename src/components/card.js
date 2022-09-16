@@ -16,7 +16,6 @@ const updateLikeButton = (cardElement, likesArray, userId) => {
     const cardLike = cardElement.querySelector('.button__like');
     const likeCounter = cardElement.querySelector('.photo__like-counter');
     likeCounter.textContent = likesArray.length;
-    console.log(userId);
     if(isLiked(likesArray, userId)) {
         cardLike.classList.add('button__like-active');
     } else {
@@ -72,8 +71,3 @@ export const renderCard = function (data, container, userId) {
     const card = createCard(data, userId);
     container.prepend(card);
 }
-
-
-
-  
-
