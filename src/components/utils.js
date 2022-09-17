@@ -1,7 +1,5 @@
 import { closeByEscape } from "./modal";
 
-export const saveButton = document.querySelector('.button__save');
-
 //закрытие попап
 export function closePopup(popup) {
     popup.classList.remove('popup_opened');
@@ -14,11 +12,11 @@ export function openPopup(popup) {
 }
 
 //Улучшение UX форм
-export function changeLoading(isLoading, saveButton) {   
+export function changeLoading(isLoading, place) {   
         if(isLoading) {
-            saveButton.textContent = "Сохранение...";
+            place.textContent = "Сохранение...";
         } else {
-            saveButton.textContent = "Сохранить";
+            place.textContent = "Сохранить";
         }    
 }
 

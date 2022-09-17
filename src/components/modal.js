@@ -1,4 +1,4 @@
-import { closePopup, openPopup, changeLoading, saveButton } from "./utils";
+import { closePopup, openPopup, changeLoading } from "./utils";
 import { editInfoUser } from "./api";
 
 
@@ -15,6 +15,7 @@ const popupPic = popupImage.querySelector('.popup__big-image');
 const popupBigTitle = document.querySelector('.popup__big-title');
 export const profileAvatarOverlay = document.querySelector('.profile__avatar-overlay');
 
+
 //подключение кнопки открытия попап для добавления картинок
 export function editPopupData() {
     nameInput.value = profileTitle.textContent;
@@ -24,6 +25,7 @@ export function editPopupData() {
 //редактирование имени и информации о себе
 export function submitProfileForm(evt) {
     evt.preventDefault();
+    const saveButton = document.querySelector('.button__edit-save');
     changeLoading(true, saveButton);
     editInfoUser(nameInput.value, jobInput.value)
     .then(()=>{

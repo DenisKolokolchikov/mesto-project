@@ -1,5 +1,5 @@
 import './pages/index.css'; 
-import { closePopup, openPopup, changeLoading, saveButton } from './components/utils';
+import { closePopup, openPopup, changeLoading } from './components/utils';
 import { editPopupData, popupAvatar, popupProfile, submitProfileForm, profileAvatarOverlay, setUserInfo, avatarInput } from './components/modal';
 import { cardsContainer, renderCard } from './components/card';
 import { validationConfig, setEventListener, toggleButtonState } from './components/validate';
@@ -26,7 +26,7 @@ profileAvatarOverlay.addEventListener('click', function () {
 //закрытие попап аватар после редактирования 
 formAvatar.addEventListener('submit', function(evt){
     evt.preventDefault(); 
-    
+    const saveButton = document.querySelector('.button__avatar-save');
     changeLoading(true, saveButton);
     patchAvatar(avatarInput.value)
         .then((userAvatar)=>{
@@ -35,8 +35,7 @@ formAvatar.addEventListener('submit', function(evt){
             closePopup(popupAvatar);
         })
         .catch((err)=> console.log(err))   
-        .finally(()=>changeLoading(false, saveButton));
-                   
+        .finally(()=>changeLoading(false, saveButton));                  
 });
 
 //открытие и закрытие попап 
@@ -73,12 +72,8 @@ getAllUnfo()
 //подключение формы добавления картинки
 formImage.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    function changeLoading(isLoading, saveButton) {   
-        if(isLoading) {
-            saveButton.textContent = "Сохранение...";
-        }     
-    }
-    /* changeLoading(true, saveButton); */
+    const saveButton = document.querySelector('.button__add-save');
+    changeLoading(true, saveButton)         
     const newCard = {
         link: inputLinkImg.value,
         name: inputNameImg.value
