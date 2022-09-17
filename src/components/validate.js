@@ -44,10 +44,6 @@ export const toggleButtonState = (button, isActive = false, config) => {
     const submitButton = formElement.querySelector(config.submitButtonSelector);
     toggleButtonState(submitButton, formElement.checkValidity(), config); 
 
-    formElement.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-    });
-
     inputList.forEach(input => {
         input.addEventListener('input', () => {
             checkInputValidity(input, formElement, config)

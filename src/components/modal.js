@@ -1,4 +1,4 @@
-import { closePopup, openPopup, changeLoading, saveButtons } from "./utils";
+import { closePopup, openPopup, changeLoading, saveButton } from "./utils";
 import { editInfoUser } from "./api";
 
 
@@ -24,14 +24,15 @@ export function editPopupData() {
 //редактирование имени и информации о себе
 export function submitProfileForm(evt) {
     evt.preventDefault();
-    changeLoading(true, saveButtons);
+    changeLoading(true, saveButton);
     editInfoUser(nameInput.value, jobInput.value)
+    .then(()=>{
+        profileTitle.textContent = nameInput.value;
+        profileSubtitle.textContent = jobInput.value;
+        closePopup(popupProfile);
+    })
     .catch((err)=> console.log(err))
-    .finally(()=>changeLoading(false, saveButtons));
-    profileTitle.textContent = nameInput.value;
-    profileSubtitle.textContent = jobInput.value;
-    closePopup(popupProfile);
-    
+    .finally(()=>changeLoading(false, saveButton));   
 }
 
 //открытие большой картинки

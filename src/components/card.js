@@ -2,7 +2,7 @@ import { handleClickImage } from "./modal";
 import { removeCard, changeLikeStatus } from "./api";
 
 const cardTemplate = document.querySelector('#card-template').content.querySelector('.elements__item');
-export const cardList = document.querySelector('.elements__list');
+export const cardsContainer = document.querySelector('.elements__list');
 
 //определяем все лайки
 const isLiked = (likesArray, userId) => {
@@ -16,12 +16,10 @@ const updateLikeButton = (cardElement, likesArray, userId) => {
     const cardLike = cardElement.querySelector('.button__like');
     const likeCounter = cardElement.querySelector('.photo__like-counter');
     likeCounter.textContent = likesArray.length;
-    if(isLiked(likesArray, userId)) {
-        cardLike.classList.add('button__like-active');
-    } else {
-        cardLike.classList.remove('button__like-active');
-    }  
+    cardLike.classList.toggle('button__like-active', isLiked(likesArray, userId)); 
 }
+
+
 
  //подключаем лайк
  const handleChangeLikesStatus = (cardElement, cardId, isLiked, userId) => {

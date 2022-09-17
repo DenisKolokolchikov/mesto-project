@@ -1,7 +1,7 @@
 import './pages/index.css'; 
-import { closePopup, openPopup, changeLoading, saveButtons } from './components/utils';
-import { editPopupData, popupAvatar, popupProfile, submitProfileForm, profileAvatarOverlay, closeByEscape, setUserInfo, avatarInput } from './components/modal';
-import { cardList, renderCard } from './components/card';
+import { closePopup, openPopup, changeLoading, saveButton } from './components/utils';
+import { editPopupData, popupAvatar, popupProfile, submitProfileForm, profileAvatarOverlay, setUserInfo, avatarInput } from './components/modal';
+import { cardsContainer, renderCard } from './components/card';
 import { validationConfig, setEventListener, toggleButtonState } from './components/validate';
 import { addNewCard, getAllUnfo, patchAvatar } from './components/api';
 
@@ -26,15 +26,17 @@ profileAvatarOverlay.addEventListener('click', function () {
 //закрытие попап аватар после редактирования 
 formAvatar.addEventListener('submit', function(evt){
     evt.preventDefault(); 
-    changeLoading(true, saveButtons);
+    
+    changeLoading(true, saveButton);
     patchAvatar(avatarInput.value)
         .then((userAvatar)=>{
             setUserInfo({userAvatar: userAvatar.avatar})
+            formAvatar.reset();
+            closePopup(popupAvatar);
         })
         .catch((err)=> console.log(err))   
-        .finally(()=>changeLoading(false, saveButtons));   
-        formAvatar.reset();
-        closePopup(popupAvatar);         
+        .finally(()=>changeLoading(false, saveButton));
+                   
 });
 
 //открытие и закрытие попап 
@@ -63,7 +65,7 @@ getAllUnfo()
         });
         userId = user._id;
         initialCards.forEach(function (item) {
-            renderCard(item, cardList, userId);
+            renderCard(item, cardsContainer, userId);  
         });
     })
     .catch((err)=> console.log(err));
@@ -71,33 +73,32 @@ getAllUnfo()
 //подключение формы добавления картинки
 formImage.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    changeLoading(true, saveButtons);
+    function changeLoading(isLoading, saveButton) {   
+        if(isLoading) {
+            saveButton.textContent = "Сохранение...";
+        }     
+    }
+    /* changeLoading(true, saveButton); */
     const newCard = {
         link: inputLinkImg.value,
         name: inputNameImg.value
     }
 addNewCard(newCard)
 .then((data) => {
-    renderCard(data, cardList, userId); 
+    renderCard(data, cardsContainer, userId); 
+    formImage.reset();
+    closePopup(popupNewImage);
 })
 .catch((err)=> console.log(err))
-.finally(()=>changeLoading(false, saveButtons));
-    formImage.reset();
-    closePopup(popupNewImage);        
+.finally(()=>changeLoading(false, saveButton));            
 });
-
-//закрытие попапов кнопкой esc
-document.addEventListener('keydown', closeByEscape);
 
 //объединение закрытие попав крестиком и мышкой
 popups.forEach((popup) => {
     popup.addEventListener('mousedown', (evt) => {
-        if (evt.target.classList.contains('popup_opened')) {
+        if ((evt.target.classList.contains('popup_opened')) || (evt.target.classList.contains('button__close'))) {
             closePopup(popup)
-        }
-        if (evt.target.classList.contains('button__close')) {
-          closePopup(popup)
-        }
+        }           
     });
 });
 
