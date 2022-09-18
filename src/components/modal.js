@@ -14,7 +14,7 @@ const popupImage = document.querySelector('.popup__type-image');
 const popupPic = popupImage.querySelector('.popup__big-image');
 const popupBigTitle = document.querySelector('.popup__big-title');
 export const profileAvatarOverlay = document.querySelector('.profile__avatar-overlay');
-
+const saveButton = document.querySelector('.button__edit-save');
 
 //подключение кнопки открытия попап для добавления картинок
 export function editPopupData() {
@@ -24,13 +24,12 @@ export function editPopupData() {
 
 //редактирование имени и информации о себе
 export function submitProfileForm(evt) {
-    evt.preventDefault();
-    const saveButton = document.querySelector('.button__edit-save');
+    evt.preventDefault();   
     changeLoading(true, saveButton);
     editInfoUser(nameInput.value, jobInput.value)
-    .then(()=>{
-        profileTitle.textContent = nameInput.value;
-        profileSubtitle.textContent = jobInput.value;
+    .then((res)=>{
+        profileTitle.textContent = res.name;
+        profileSubtitle.textContent = res.about;
         closePopup(popupProfile);
     })
     .catch((err)=> console.log(err))

@@ -26,8 +26,7 @@ profileAvatarOverlay.addEventListener('click', function () {
 //закрытие попап аватар после редактирования 
 formAvatar.addEventListener('submit', function(evt){
     evt.preventDefault(); 
-    const saveButton = document.querySelector('.button__avatar-save');
-    changeLoading(true, saveButton);
+    changeLoading(true, buttonAvatarSave);
     patchAvatar(avatarInput.value)
         .then((userAvatar)=>{
             setUserInfo({userAvatar: userAvatar.avatar})
@@ -35,7 +34,7 @@ formAvatar.addEventListener('submit', function(evt){
             closePopup(popupAvatar);
         })
         .catch((err)=> console.log(err))   
-        .finally(()=>changeLoading(false, saveButton));                  
+        .finally(()=>changeLoading(false, buttonAvatarSave));                  
 });
 
 //открытие и закрытие попап 
@@ -71,9 +70,8 @@ getAllUnfo()
 
 //подключение формы добавления картинки
 formImage.addEventListener('submit', function (evt) {
-    evt.preventDefault();
-    const saveButton = document.querySelector('.button__add-save');
-    changeLoading(true, saveButton)         
+    evt.preventDefault();   
+    changeLoading(true, buttonAddSave)         
     const newCard = {
         link: inputLinkImg.value,
         name: inputNameImg.value
@@ -85,7 +83,7 @@ addNewCard(newCard)
     closePopup(popupNewImage);
 })
 .catch((err)=> console.log(err))
-.finally(()=>changeLoading(false, saveButton));            
+.finally(()=>changeLoading(false, buttonAddSave));            
 });
 
 //объединение закрытие попав крестиком и мышкой
