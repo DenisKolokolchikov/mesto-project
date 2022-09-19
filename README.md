@@ -29,4 +29,4 @@
 
 ### [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1) - верстка сайта
 ### [Ссылка на макет в Figma](https://www.figma.com/file/PSdQFRHoxXJFs2FH8IXViF/JavaScript.-Sprint-9?node-id=109%3A75) - дополнительные требования
-
+### [Ссылка на проект в Github](https://DenisKolokolchikov.github.io/mesto-project)
