@@ -20,5 +20,18 @@ export class PopupWithForm extends Popup {
           this._formValues[input.name] = input.value;
         });
         return this._formValues;
-      }    
+      }
+
+      //закрытие попапа - всё сбрасываем
+      close() {
+        this.popupSelector.removeEventListener('submit', this.handleSubmitForm);
+        this.popupSelector.querySelector('.form__popup').reset(); //сбросили поля
+        super.close();
+      }
+
+      setEventListeners() {
+        this._submit = this._setSubmitForm.bind(this);
+        this.popupSelector.addEventListener('submit', this._submit);
+        super.setEventListeners();
+      }     
 }
