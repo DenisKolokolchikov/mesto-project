@@ -133,3 +133,65 @@ const openProfileFormPopup = () => {
 editButton.addEventListener('click', () => openProfileFormPopup());
 
 /**----------------------------------------------------------------------------------- */
+
+/**---------------попап аватар--------------------------------------------------------- */
+const openAvatarChange = new PopupWithForm(popupAvatar, {
+    handleSubmitForm: (user) => {
+        changeLoading(popupAvatar); //изменение 'Сохранить' на 'Сохранение...'
+        api.patchAvatar(user.linkAvatar)
+        .then((res) => {
+            profileInfo.makeUserAvatar(res)  
+            openAvatarChange.close();
+        })
+       .catch((err)=> console.log(err));
+    }
+})
+openAvatarChange.setEventListeners(); //подключаем к попапу закрытие крестиком и оверлай
+
+//открытие попап аватар
+const openUserAvatar = () => {
+    buttonAvatarSave.textContent = 'Сохранить';
+    validNewAvatar.clearError(formAvatar); //блокировка/разблокировка кнопки валидацией
+    validNewAvatar.toggleButtonState(inputList, buttonAvatarSave); //блокировка/разблокировка кнопки валидацией
+    openAvatarChange.open();
+}
+//подключаем кнопку сохранить попапа аватар
+profileAvatarOverlay.addEventListener('click', () => openUserAvatar())
+/**---------------------------------------------------------------------------------- */
+
+/**-----------------добавление картинки---------------------------------------------- */
+const openFormPicture = new PopupWithForm(popupNewImage, {
+    handleSubmitForm: (user) => {
+        changeLoading(popupNewImage); //изменение 'Сохранить' на 'Сохранение...'
+        api.addNewCard(user.imgname, user.link)
+        .then((res) => {
+            const cardElement = createCard(res).generateCardElement(); 
+            cardList.addItem(cardElement); 
+            openFormPicture.close();
+        })
+        .catch((err)=> console.log(err));
+        
+    }
+});
+
+openFormPicture.setEventListeners();//подключаем к попапу закрытие крестиком и оверлай
+
+//открытие попап добавления картинки
+const openFormCard = () => {
+    validNewImage.clearError(formImage); //отчищаем при открытие ошибки валидации
+    validNewImage.toggleButtonState(inputList, buttonAddSave); //блокировка/разблокировка кнопки валидацией
+    openFormPicture.open();
+}
+
+addButton.addEventListener('click', () => openFormCard());
+/**---------------------------------------------------------------------------------- */
+
+/**---------------------------валидация форм___________________________________________ */
+const validProfile = new FormValidator(validationConfig, popupProfile);
+validProfile.enableValidation();
+
+const validNewImage = new FormValidator(validationConfig, popupNewImage);
+validNewImage.enableValidation();
+
+const validNewAvatar = new FormValidator(validationConfig, popupAvatar);
+validNewAvatar.enableValidation();
