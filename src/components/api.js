@@ -1,6 +1,3 @@
-     
-
-//ce578aeb-a49b-4df4-9aa2-77f24f46d839 старый токен когорта-13
 export class Api {
     #onResponse(res) {
         return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
@@ -57,6 +54,43 @@ export class Api {
         .then(this.#onResponse)
     } 
 
+    //загрузка информации о пользователе
+    getInfoUser() {
+        return fetch(`${this._baseUrl}/users/me`, {
+            headers: this._headers
+        })
+        .then(this.#onResponse)
+    } 
+
+    //обновдение аватара
+    patchAvatar(avatar) {
+        return fetch(`${this._baseUrl}/users/me/avatar`, {
+        method: 'PATCH',
+        headers: this._headers,
+        body: JSON.stringify({
+        avatar: avatar
+        })
+        })
+        .then(this.#onResponse)
+    }
+
+    //ставим лайк
+    setLike(cardId) {
+        return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+            method: "PUT",
+            headers: this._headers
+        })
+        .then(this.#onResponse)
+    }
+
+    //Удаляем лайк
+    remLike(cardId) {
+        return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+            method:"DELETE",
+            headers: this._headers
+        })
+        .then(this.#onResponse)
+    }
 }
 
 
