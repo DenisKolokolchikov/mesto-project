@@ -1,4 +1,4 @@
-import './index.css'; 
+import '../index.css'; 
 
 import { Section } from '../components/Section';
 import { Api } from '../components/api';
@@ -72,3 +72,64 @@ function handleDeleteCard(id)  {
         .catch((err) => console.log(err));
 };
 /**---------------------------------------------------------------------------------- */
+
+//создание карточки - дабавление в DOM
+const cardList = new Section({
+    renderer: (item) => {
+        const cardElement = createCard(item).generateCardElement();
+        cardList.addItem(cardElement)
+    }
+}, cardContainer);
+
+//данные для отображения инфо пользователя
+const profileInfo = new UserInfo({
+    profileName: document.querySelector('.profile__title'),
+    profileDescription: document.querySelector('.profile__subtitle'),
+    profileAvatar: document.querySelector('.profile__avatar'),
+});
+
+//отображение карточек и инфо пользователя
+let userId = null 
+api.getAllUnfo()
+.then(([items, user]) => {
+    items = items.reverse(); //add
+    profileInfo.getInfoUser(user.name, user.about, user.avatar);
+    profileInfo.setUserInfo(user);
+    userId = user._id;
+    cardList.renderItems(items);
+}) 
+.catch((err)=> console.log(err));
+
+/**---------------------------------------------------------------------------------- */
+
+/**------------попап редактирования профиля------------------------------------------- */
+//форма редактирования профиля
+const profileFormPopup = new PopupWithForm(popupProfile, { 
+    handleSubmitForm: (user) => {
+        changeLoading(popupProfile); //изменение 'Сохранить' на 'Сохранение...'
+        api.editInfoUser(user.username, user.profession)
+        .then((res) => {
+            profileInfo.setUserInfo(res)
+            profileFormPopup.close()
+        })
+        .catch((err)=> console.log(err))
+    } 
+});
+profileFormPopup.setEventListeners(); //подключаем к попапу закрытие крестиком и оверлай
+
+
+//открытие попапа редактирования профиля
+const openProfileFormPopup = () => {
+    saveButton.textContent = 'Сохранить';
+    const userInfoEdit = profileInfo.getInfoUser();
+    nameInput.value = userInfoEdit.name; //при открытие получаем данные с сервера в полях ввода
+    jobInput.value = userInfoEdit.about;
+    validProfile.clearError(formEdit); //отчищаем при открытие ошибки валидации
+    validProfile.toggleButtonState(inputList, saveButton); //блокировка/разблокировка кнопки валидацией
+    //дописать валидацию
+    profileFormPopup.open();
+}
+//подключаем кнопку сохранить попапа редактирование инфо пользователя
+editButton.addEventListener('click', () => openProfileFormPopup());
+
+/**----------------------------------------------------------------------------------- */
