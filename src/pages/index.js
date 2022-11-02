@@ -49,3 +49,26 @@ export const api = new Api(config);
 //попап большой картинки
 const popupBigImage = new PopupWithImage(popupImage);
 popupBigImage.setEventListeners(); //подключаем к попапу закрытие крестиком и оверлай
+
+/**--------------------отрисовка карточек и информации------------------ */
+//функция отрисовки карточки
+function createCard(data) {
+    const card = new Card(cardTemplate, () => api.setLike(data._id), () => api.remLike(data._id),/* () => putDeleteLikes(data._id) */ 
+    {data,
+        handleCardClick: () => {
+            popupBigImage.open(data); //открытие большой картинки
+        }
+    }, 
+    () =>  handleDeleteCard(data._id), 
+    {userId});
+    return card;
+}
+
+/**---------------------------удаление карточки с сервера___________________________________________ */
+function handleDeleteCard(id)  {
+    api.removeCard(id)
+        .then(() => {
+        })
+        .catch((err) => console.log(err));
+};
+/**---------------------------------------------------------------------------------- */
