@@ -13,4 +13,18 @@ export class Popup {
         this.popupSelector.classList.remove('popup_opened');
         document.removeEventListener('keydown', this._handleEscClose);
     }
+
+    _handleEscClose(evt) {
+        if(evt.key === 'Escape') {
+            this.close();
+        }
+    }
+
+    setEventListeners(){
+        //закрытие крестиком и по оверлею
+        this.popupSelector.addEventListener('mousedown', evt => {
+            if ((evt.target.classList.contains('popup_opened')) || (evt.target.classList.contains('button__close'))) {
+                this.close();
+        }})
+    }
 }
