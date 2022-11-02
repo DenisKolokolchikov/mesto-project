@@ -178,6 +178,7 @@ openFormPicture.setEventListeners();//подключаем к попапу за�
 
 //открытие попап добавления картинки
 const openFormCard = () => {
+    buttonAddSave.textContent = 'Сохранить';
     validNewImage.clearError(formImage); //отчищаем при открытие ошибки валидации
     validNewImage.toggleButtonState(inputList, buttonAddSave); //блокировка/разблокировка кнопки валидацией
     openFormPicture.open();
