@@ -21,6 +21,41 @@ export class Api {
         return Promise.all([this.getInitialCards(), this.getInfoUser()])
     }
 
+    
+    //добавляем новую карточку
+    addNewCard(name, link) {
+        return fetch(`${this._baseUrl}/cards`, {
+            method: 'POST',
+            headers: this._headers,
+            body: JSON.stringify({
+                name: name,
+                link: link,
+            }) 
+        })
+        .then(this.#onResponse)
+    } 
+
+    //удаление карточки
+    removeCard(cardId) {
+        return fetch(`${this._baseUrl}/cards/${cardId}`, {
+            method: 'DELETE',
+            headers: this._headers
+        })
+        .then(this.#onResponse)
+    }
+
+    //редактирование инфо профиля
+    editInfoUser(name, job) {
+        return fetch(`${this._baseUrl}/users/me`, {
+            method: 'PATCH',
+            headers: this._headers, 
+            body: JSON.stringify({
+                name: name,
+                about: job
+            })
+        })
+        .then(this.#onResponse)
+    } 
 
 }
 
