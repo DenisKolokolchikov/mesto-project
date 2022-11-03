@@ -21,7 +21,7 @@ popupBigImage.setEventListeners(); //подключаем к попапу зак
 /**--------------------отрисовка карточек и информации------------------ */
 //функция отрисовки карточки
 function createCard(data) {
-    const card = new Card('#card-template', () => api.setLike(data._id), () => api.remLike(data._id),/* () => putDeleteLikes(data._id) */ 
+    const card = new Card('#card-template', () => api.setLike(data._id), () => api.remLike(data._id),
     {data,
         handleCardClick: () => {
             popupBigImage.open(data); //открытие большой картинки
@@ -76,7 +76,6 @@ api.getAllUnfo()
 //форма редактирования профиля
 const profileFormPopup = new PopupWithForm(popupProfile, { 
     handleSubmitForm: (user) => {
-        //изменил замечания про кнопку сохранить
         changeLoading(true, saveButton); //изменение 'Сохранить' на 'Сохранение...'
         api.editInfoUser(user.username, user.profession)
         .then((res) => {
@@ -84,11 +83,10 @@ const profileFormPopup = new PopupWithForm(popupProfile, {
             profileFormPopup.close()
         })
         .catch((err)=> console.log(err))
-        //изменил замечания про кнопку сохранить
         .finally(()=>changeLoading(false, saveButton)); 
     } 
 });
-profileFormPopup.setEventListeners(); //подключаем к попапу закрытие крестиком и оверлай
+profileFormPopup.setEventListeners();
 
 
 //открытие попапа редактирования профиля
@@ -108,7 +106,6 @@ editButton.addEventListener('click', () => openProfileFormPopup());
 /**---------------попап аватар--------------------------------------------------------- */
 const openAvatarChange = new PopupWithForm(popupAvatar, {
     handleSubmitForm: (user) => {
-        //изменил замечания про кнопку сохранить
         changeLoading(true, buttonAvatarSave); //изменение 'Сохранить' на 'Сохранение...'
         api.patchAvatar(user.linkAvatar)
         .then((res) => {
@@ -116,7 +113,6 @@ const openAvatarChange = new PopupWithForm(popupAvatar, {
             openAvatarChange.close();
         })
        .catch((err)=> console.log(err))
-       //изменил замечания про кнопку сохранить
        .finally(()=>changeLoading(false, buttonAvatarSave));
     }
 })
@@ -135,7 +131,6 @@ profileAvatarOverlay.addEventListener('click', () => openUserAvatar())
 /**-----------------добавление картинки---------------------------------------------- */
 const openFormPicture = new PopupWithForm(popupNewImage, {
     handleSubmitForm: (user) => {
-        //изменил замечания про кнопку сохранить
         changeLoading(true, buttonAddSave); //изменение 'Сохранить' на 'Сохранение...'
         api.addNewCard(user.imgname, user.link)
         .then((res) => {
@@ -144,7 +139,6 @@ const openFormPicture = new PopupWithForm(popupNewImage, {
             openFormPicture.close();
         })
         .catch((err)=> console.log(err))
-        //изменил замечания про кнопку сохранить
         .finally(()=>changeLoading(false, buttonAddSave));
         
     }
