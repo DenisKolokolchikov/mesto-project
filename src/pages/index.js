@@ -36,6 +36,8 @@ function createCard(data) {
 function handleDeleteCard(id)  {
     api.removeCard(id)
         .then(() => {
+            const elementItem = document.querySelector('.elements__item');
+            elementItem.closest('.elements__item').remove();
         })
         .catch((err) => console.log(err));
 };
