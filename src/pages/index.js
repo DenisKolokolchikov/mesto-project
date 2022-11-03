@@ -10,7 +10,7 @@ import { FormValidator } from '../components/FormValidator';
 import { changeLoading } from '../utils/utils';
 import { popupImage, popupProfile, saveButton, editButton, nameInput, jobInput, popupAvatar, profileAvatarOverlay, popupNewImage,
     addButton, inputList, formEdit, formImage, formAvatar, buttonAddSave, buttonAvatarSave, 
-    cardContainer, validationConfig, config} from '../utils/constants';
+    cardContainer, validationConfig, config } from '../utils/constants';
 
 export const api = new Api(config);
 
@@ -36,6 +36,9 @@ function createCard(data) {
 function handleDeleteCard(id)  {
     api.removeCard(id)
         .then(() => {
+            //исправил ошибку Удалять карточки нужно только в блоке then
+            const elementItem = document.querySelector('.elements__item');
+            elementItem.closest('.elements__item').remove();
         })
         .catch((err) => console.log(err));
 };
