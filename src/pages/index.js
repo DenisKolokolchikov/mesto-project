@@ -21,7 +21,7 @@ popupBigImage.setEventListeners(); //подключаем к попапу зак
 /**--------------------отрисовка карточек и информации------------------ */
 //функция отрисовки карточки
 function createCard(data) {
-    const card = new Card(cardTemplate, () => api.setLike(data._id), () => api.remLike(data._id),/* () => putDeleteLikes(data._id) */ 
+    const card = new Card('#card-template', () => api.setLike(data._id), () => api.remLike(data._id),/* () => putDeleteLikes(data._id) */ 
     {data,
         handleCardClick: () => {
             popupBigImage.open(data); //открытие большой картинки
