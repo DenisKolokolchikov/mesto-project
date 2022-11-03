@@ -16,8 +16,11 @@ export class Card {
 
     // клонировать темлейт из html в DOM
     _getTemplate() {
-        // исправил 'селектор темплейта по заданию нужно передавать в конструктор класса'
-        return document.querySelector(this._cardTemplate).content.cloneNode(true);   
+        this._cardTemplate = document.querySelector('#card-template').content.cloneNode(true);
+        this._element = this._cardTemplate;
+        this._element.id = this._id;
+        this._element.querySelector('.photo__like-counter').textContent = this._likesArray.length;
+        return this._element; 
     }
 
     //определить владельца карточки
@@ -46,10 +49,9 @@ export class Card {
     }
     
     //удалить карточку
-     //исправил ошибку Удалять карточки нужно только в блоке then
-    _deleteCard(/* cardDelete */){
+    _deleteCard(cardDelete){
         this._removeCard();
-        /* cardDelete.closest('.elements__item').remove(); */
+        cardDelete.closest('.elements__item').remove();
     }
     
     _cardClickHandler(evt) {
@@ -89,7 +91,7 @@ export class Card {
         //удаляем свою карточку
         if(this._owner == this._userId) {
             const cardDelete = this._element.querySelector('.button__del');
-            cardDelete.addEventListener('click', () => this._deleteCard());
+            cardDelete.addEventListener('click', () => this._deleteCard(cardDelete));
         } 
     }
 }

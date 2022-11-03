@@ -14,6 +14,7 @@ export const config = {
     }
 };
  
+export const cardTemplate = document.querySelector('#card-template'); 
 export const popupImage = document.querySelector('.popup__type-image');
 export const popupProfile = document.querySelector('.popup-profile');
 export const saveButton = document.querySelector('.button__edit-save');

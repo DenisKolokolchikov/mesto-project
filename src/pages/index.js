@@ -8,7 +8,7 @@ import { PopupWithImage } from '../components/PopupWithImage';
 import { PopupWithForm } from '../components/PopupWithForm';
 import { FormValidator } from '../components/FormValidator';
 import { changeLoading } from '../utils/utils';
-import { popupImage, popupProfile, saveButton, editButton, nameInput, jobInput, popupAvatar, profileAvatarOverlay, popupNewImage,
+import { cardTemplate, popupImage, popupProfile, saveButton, editButton, nameInput, jobInput, popupAvatar, profileAvatarOverlay, popupNewImage,
     addButton, inputList, formEdit, formImage, formAvatar, buttonAddSave, buttonAvatarSave, 
     cardContainer, validationConfig, config } from '../utils/constants';
 
@@ -21,7 +21,7 @@ popupBigImage.setEventListeners(); //подключаем к попапу зак
 /**--------------------отрисовка карточек и информации------------------ */
 //функция отрисовки карточки
 function createCard(data) {
-    const card = new Card('#card-template', () => api.setLike(data._id), () => api.remLike(data._id),/* () => putDeleteLikes(data._id) */ 
+    const card = new Card(cardTemplate, () => api.setLike(data._id), () => api.remLike(data._id),/* () => putDeleteLikes(data._id) */ 
     {data,
         handleCardClick: () => {
             popupBigImage.open(data); //открытие большой картинки
@@ -36,9 +36,6 @@ function createCard(data) {
 function handleDeleteCard(id)  {
     api.removeCard(id)
         .then(() => {
-            //исправил ошибку Удалять карточки нужно только в блоке then
-            const elementItem = document.querySelector('.elements__item');
-            elementItem.closest('.elements__item').remove();
         })
         .catch((err) => console.log(err));
 };
@@ -94,13 +91,11 @@ profileFormPopup.setEventListeners(); //подключаем к попапу з�
 
 //открытие попапа редактирования профиля
 const openProfileFormPopup = () => {
-    /* saveButton.textContent = 'Сохранить'; */ //удалить эту строчку
     const userInfoEdit = profileInfo.getInfoUser();
     nameInput.value = userInfoEdit.name; //при открытие получаем данные с сервера в полях ввода
     jobInput.value = userInfoEdit.about;
     validProfile.clearError(formEdit); //отчищаем при открытие ошибки валидации
     validProfile.toggleButtonState(inputList, saveButton); //блокировка/разблокировка кнопки валидацией
-    //дописать валидацию
     profileFormPopup.open();
 }
 //подключаем кнопку сохранить попапа редактирование инфо пользователя
@@ -127,7 +122,6 @@ openAvatarChange.setEventListeners(); //подключаем к попапу з�
 
 //открытие попап аватар
 const openUserAvatar = () => {
-    /* buttonAvatarSave.textContent = 'Сохранить'; */ //удалить эту строчку
     validNewAvatar.clearError(formAvatar); //блокировка/разблокировка кнопки валидацией
     validNewAvatar.toggleButtonState(inputList, buttonAvatarSave); //блокировка/разблокировка кнопки валидацией
     openAvatarChange.open();
@@ -158,7 +152,7 @@ openFormPicture.setEventListeners();//подключаем к попапу за�
 
 //открытие попап добавления картинки
 const openFormCard = () => {
-    /* buttonAddSave.textContent = 'Сохранить'; */ //удалить эту строчку
+    
     validNewImage.clearError(formImage); //отчищаем при открытие ошибки валидации
     validNewImage.toggleButtonState(inputList, buttonAddSave); //блокировка/разблокировка кнопки валидацией
     openFormPicture.open();
