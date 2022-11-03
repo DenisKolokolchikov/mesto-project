@@ -8,7 +8,7 @@ import { PopupWithImage } from '../components/PopupWithImage';
 import { PopupWithForm } from '../components/PopupWithForm';
 import { FormValidator } from '../components/FormValidator';
 import { changeLoading } from '../utils/utils';
-import { cardTemplate, popupImage, popupProfile, saveButton, editButton, nameInput, jobInput, popupAvatar, profileAvatarOverlay, popupNewImage,
+import { popupImage, popupProfile, saveButton, editButton, nameInput, jobInput, popupAvatar, profileAvatarOverlay, popupNewImage,
     addButton, inputList, formEdit, formImage, formAvatar, buttonAddSave, buttonAvatarSave, 
     cardContainer, validationConfig, config } from '../utils/constants';
 
@@ -21,7 +21,7 @@ popupBigImage.setEventListeners(); //подключаем к попапу зак
 /**--------------------отрисовка карточек и информации------------------ */
 //функция отрисовки карточки
 function createCard(data) {
-    const card = new Card(cardTemplate, () => api.setLike(data._id), () => api.remLike(data._id),/* () => putDeleteLikes(data._id) */ 
+    const card = new Card('#card-template', () => api.setLike(data._id), () => api.remLike(data._id),/* () => putDeleteLikes(data._id) */ 
     {data,
         handleCardClick: () => {
             popupBigImage.open(data); //открытие большой картинки
