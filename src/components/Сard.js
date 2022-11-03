@@ -16,11 +16,11 @@ export class Card {
 
     // клонировать темлейт из html в DOM
     _getTemplate() {
-        this._cardTemplate = document.querySelector('#card-template').content.cloneNode(true);
-        this._element = this._cardTemplate;
+        /* this._cardTemplate = */ return document.querySelector(this._cardTemplate).content.cloneNode(true);
+        /* this._element = this._cardTemplate;
         this._element.id = this._id;
-        this._element.querySelector('.photo__like-counter').textContent = this._likesArray.length;
-        return this._element;
+        this._element.querySelector('.photo__like-counter').textContent = this._likesArray.length;*/
+        /* return this._element; */
     }
 
     //определить владельца карточки
