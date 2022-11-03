@@ -8,7 +8,7 @@ import { PopupWithImage } from '../components/PopupWithImage';
 import { PopupWithForm } from '../components/PopupWithForm';
 import { FormValidator } from '../components/FormValidator';
 import { changeLoading } from '../utils/utils';
-import { cardTemplate, popupImage, popupProfile, saveButton, editButton, nameInput, jobInput, popupAvatar, profileAvatarOverlay, popupNewImage,
+import { popupImage, popupProfile, saveButton, editButton, nameInput, jobInput, popupAvatar, profileAvatarOverlay, popupNewImage,
     addButton, inputList, formEdit, formImage, formAvatar, buttonAddSave, buttonAvatarSave, 
     cardContainer, validationConfig, config} from '../utils/constants';
 
@@ -74,13 +74,16 @@ api.getAllUnfo()
 //форма редактирования профиля
 const profileFormPopup = new PopupWithForm(popupProfile, { 
     handleSubmitForm: (user) => {
-        changeLoading(popupProfile); //изменение 'Сохранить' на 'Сохранение...'
+        //изменил замечания про кнопку сохранить
+        changeLoading(true, saveButton); //изменение 'Сохранить' на 'Сохранение...'
         api.editInfoUser(user.username, user.profession)
         .then((res) => {
             profileInfo.setUserInfo(res)
             profileFormPopup.close()
         })
         .catch((err)=> console.log(err))
+        //изменил замечания про кнопку сохранить
+        .finally(()=>changeLoading(false, saveButton)); 
     } 
 });
 profileFormPopup.setEventListeners(); //подключаем к попапу закрытие крестиком и оверлай
@@ -88,7 +91,7 @@ profileFormPopup.setEventListeners(); //подключаем к попапу з�
 
 //открытие попапа редактирования профиля
 const openProfileFormPopup = () => {
-    saveButton.textContent = 'Сохранить';
+    /* saveButton.textContent = 'Сохранить'; */ //удалить эту строчку
     const userInfoEdit = profileInfo.getInfoUser();
     nameInput.value = userInfoEdit.name; //при открытие получаем данные с сервера в полях ввода
     jobInput.value = userInfoEdit.about;
@@ -105,20 +108,23 @@ editButton.addEventListener('click', () => openProfileFormPopup());
 /**---------------попап аватар--------------------------------------------------------- */
 const openAvatarChange = new PopupWithForm(popupAvatar, {
     handleSubmitForm: (user) => {
-        changeLoading(popupAvatar); //изменение 'Сохранить' на 'Сохранение...'
+        //изменил замечания про кнопку сохранить
+        changeLoading(true, buttonAvatarSave); //изменение 'Сохранить' на 'Сохранение...'
         api.patchAvatar(user.linkAvatar)
         .then((res) => {
             profileInfo.makeUserAvatar(res)  
             openAvatarChange.close();
         })
-       .catch((err)=> console.log(err));
+       .catch((err)=> console.log(err))
+       //изменил замечания про кнопку сохранить
+       .finally(()=>changeLoading(false, buttonAvatarSave));
     }
 })
 openAvatarChange.setEventListeners(); //подключаем к попапу закрытие крестиком и оверлай
 
 //открытие попап аватар
 const openUserAvatar = () => {
-    buttonAvatarSave.textContent = 'Сохранить';
+    /* buttonAvatarSave.textContent = 'Сохранить'; */ //удалить эту строчку
     validNewAvatar.clearError(formAvatar); //блокировка/разблокировка кнопки валидацией
     validNewAvatar.toggleButtonState(inputList, buttonAvatarSave); //блокировка/разблокировка кнопки валидацией
     openAvatarChange.open();
@@ -130,14 +136,17 @@ profileAvatarOverlay.addEventListener('click', () => openUserAvatar())
 /**-----------------добавление картинки---------------------------------------------- */
 const openFormPicture = new PopupWithForm(popupNewImage, {
     handleSubmitForm: (user) => {
-        changeLoading(popupNewImage); //изменение 'Сохранить' на 'Сохранение...'
+        //изменил замечания про кнопку сохранить
+        changeLoading(true, buttonAddSave); //изменение 'Сохранить' на 'Сохранение...'
         api.addNewCard(user.imgname, user.link)
         .then((res) => {
             const cardElement = createCard(res).generateCardElement(); 
             cardList.addItem(cardElement); 
             openFormPicture.close();
         })
-        .catch((err)=> console.log(err));
+        .catch((err)=> console.log(err))
+        //изменил замечания про кнопку сохранить
+        .finally(()=>changeLoading(false, buttonAddSave));
         
     }
 });
@@ -146,7 +155,7 @@ openFormPicture.setEventListeners();//подключаем к попапу за�
 
 //открытие попап добавления картинки
 const openFormCard = () => {
-    buttonAddSave.textContent = 'Сохранить';
+    /* buttonAddSave.textContent = 'Сохранить'; */ //удалить эту строчку
     validNewImage.clearError(formImage); //отчищаем при открытие ошибки валидации
     validNewImage.toggleButtonState(inputList, buttonAddSave); //блокировка/разблокировка кнопки валидацией
     openFormPicture.open();

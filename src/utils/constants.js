@@ -13,8 +13,7 @@ export const config = {
         authorization: '2b8d2e32-f428-4578-8dc4-d80d04887d6e'
     }
 };
-
-export const cardTemplate = document.querySelector('#card-template'); 
+ 
 export const popupImage = document.querySelector('.popup__type-image');
 export const popupProfile = document.querySelector('.popup-profile');
 export const saveButton = document.querySelector('.button__edit-save');
