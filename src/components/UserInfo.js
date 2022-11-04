@@ -3,7 +3,6 @@ export class UserInfo {
       this._name = info.profileName;
       this._about = info.profileDescription;
       this._avatar = info.profileAvatar;
-      this.userAvatar = document.querySelector('.profile__avatar');
     }
   
     getInfoUser() {
@@ -15,14 +14,10 @@ export class UserInfo {
       return userInfo;
     }
   
-    makeUserAvatar(data) {
-      this._avatar.src = data.avatar;
-    }
-  
     setUserInfo(data) {
       this._name.textContent = data.name;
       this._about.textContent = data.about;
       this._avatar.src = data.avatar;
-      this.userAvatar.src = data.avatar;
     }
   }
+  
