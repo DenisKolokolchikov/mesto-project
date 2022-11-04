@@ -39,7 +39,8 @@ export class Card {
         this._cardOwner(this._owner);
         //сравниваем id текущего объекта с id пользователя. А метод find вернет объект, если объект пустой будет null
         if(this._likesArray.find(likeObj => likeObj._id === this._userId)) { 
-            this._element.querySelector('.button__like').classList.toggle('button__like-active'); 
+            this._element.querySelector('.button__like').classList.toggle('button__like-active');
+            this._likeCounter.textContent = this._likesArray.length;
         }  
         return this._element
     }
@@ -56,16 +57,16 @@ export class Card {
     }
 
     //отображаем лайки
-    _likeHandler(likeButton, likeCounter) {
-        if (likeButton.classList.contains('button__like-active')) {
-            likeButton.classList.remove('button__like-active');
-            likeCounter.textContent = this._likesArray.length -= 1;
+    _likeHandler() {
+        if (this._likeButton.classList.contains('button__like-active')) {
+            this._likeButton.classList.remove('button__like-active');
+            this._likeCounter.textContent = this._likesArray.length -= 1;
             this._remLike(this._id);
             return;
         }
-        likeButton.classList.add('button__like-active');
+        this._likeButton.classList.add('button__like-active');
+        this._likeCounter.textContent = this._likesArray.length += 1;
         this._setLike(this._id);
-        likeCounter.textContent = this._likesArray.length += 1;
     }
 
     //слушатели событий
@@ -74,10 +75,10 @@ export class Card {
         this._element.addEventListener('click', this._cardHandler);
 
        //ставим лайк 
-       const likeButton = this._element.querySelector('.button__like');
-       const likeCounter = this._element.querySelector('.photo__like-counter');
-       likeButton.addEventListener('click', () => this._likeHandler(likeButton, likeCounter));
-
+       this._likeButton = this._element.querySelector('.button__like');
+       this._likeCounter = this._element.querySelector('.photo__like-counter');
+       this._likeButton.addEventListener('click', () => this._likeHandler());
+       
         //открываем большую картинку
         this._element.querySelector('.elements__img').addEventListener('click', () => {
             this._handleCardClick();
