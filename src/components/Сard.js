@@ -1,20 +1,14 @@
 export class Card {
-    constructor(data, userId, cardTemplate, {handleCardClick}, {handleToggleLike}/* setLike, remLike */,  /* data, */  {removeCard}, /* {userId} */) {
+    constructor(data, userId, cardTemplate, {handleCardClick}, {handleToggleLike}, {removeCard}) {
         this._handleCardClick = handleCardClick;
         this._cardTemplate = cardTemplate;
         this._removeCard = removeCard;
         this._userId = userId; 
         this._owner = data.owner._id;
-        /* this._cardOwner = data.owner._id === userId._id; */
-        /* this._card = card; */
         this._id = data; 
-        /* this._likesArray = data.likes; */
         this._image = data.link;
         this._name = data.name;
-        /* this._setLike = setLike;
-        this._remLike = remLike; */
-        this._toggleLike = handleToggleLike;
-        
+        this._toggleLike = handleToggleLike;    
     }
 
     // клонировать темлейт из html в DOM
@@ -23,7 +17,7 @@ export class Card {
     }
 
     //определить владельца карточки
-    _cardOwner(_owner){    //если не владелец, корзинка удаления не отображается
+    _cardOwner(_owner) {    //если не владелец, корзинка удаления не отображается
         if(this._owner !== this._userId) {
             const cardDelete = this._element.querySelector('.button__del');
             cardDelete.remove(); 
@@ -42,17 +36,12 @@ export class Card {
         this._cardOwner(this._owner);
         this._likeCounter = this._element.querySelector('.photo__like-counter');
         this._setLikesCount(this._id.likes.length);
-        this._checkMyLike(this._id.likes);
-        //сравниваем id текущего объекта с id пользователя. А метод find вернет объект, если объект пустой будет null
-        /* if(this._likesArray.find(likeObj => likeObj._id === this._userId)) { 
-            this._element.querySelector('.button__like').classList.toggle('button__like-active');
-            this._likeCounter.textContent = this._likesArray.length;
-        } */  
+        this._checkMyLike(this._id.likes);  
         return this._element
     }
     
     //удалить карточку
-    _deleteCard(){
+    _deleteCard() {
         this._removeCard(this._element, this._id);
     }
     
@@ -63,16 +52,35 @@ export class Card {
     }
 
     //отображаем лайки
-    _likeHandler() {
-        if (this._likeButton.classList.contains('button__like-active')) {
-            this._likeButton.classList.remove('button__like-active');
-            this._likeCounter.textContent = this._likesArray.length -= 1;
-            this._remLike(this._id);
-            return;
+    _handleToggleLike() {
+        if (!this._likeButton.classList.contains('button__like-active')) {
+            this._toggleLike('PUT', this._id)
+                .then((data) => {
+                this._setLikesCount(data.likes.length);
+                this._checkMyLike(data.likes);
+                })
+                .catch((err) => console.log(err));
+            } else {
+            this._toggleLike('DELETE', this._id)
+                .then((data) => {
+                this._setLikesCount(data.likes.length);
+                this._checkMyLike(data.likes);
+                })
+                .catch((err) => console.log(err));
         }
-        this._likeButton.classList.add('button__like-active');
-        this._likeCounter.textContent = this._likesArray.length += 1;
-        this._setLike(this._id);
+    }
+
+    _setLikesCount(length) {
+        this._likeCounter.textContent = length;
+    }  
+
+    _checkMyLike(likes) {
+        const myLike = (likeObj) => likeObj._id === this._userId;
+        if(likes.find(myLike)) { 
+            this._likeButton.classList.add('button__like-active');   
+        } else {
+            this._likeButton.classList.remove('button__like-active');
+        }
     }
 
     //слушатели событий

@@ -34,13 +34,11 @@ function createCard(data) {
           }
         },
     },
-    function removeCard (elementItem, data) {
-        api.removeCard(data._id)
-            .then(() =>{
-                elementItem.remove();
-            })
-            .catch((err) => console.log(err))
-     }
+    {removeCard: function (cardElement, cardData) {
+        api.removeCard(cardData._id)
+        .then(() => cardElement.remove())
+        .catch((err) => console.log(err));
+    }}
     );
     return card;
 }
