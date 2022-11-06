@@ -1,16 +1,19 @@
 export class Card {
-    constructor(cardTemplate, setLike, remLike, {data, handleCardClick}, {removeCard}, {userId}) {
+    constructor(data, userId, cardTemplate, {handleCardClick}, {handleToggleLike}/* setLike, remLike */,  /* data, */  {removeCard}, /* {userId} */) {
         this._handleCardClick = handleCardClick;
         this._cardTemplate = cardTemplate;
         this._removeCard = removeCard;
         this._userId = userId; 
         this._owner = data.owner._id;
-        this._id = data._id;
-        this._likesArray = data.likes;
+        /* this._cardOwner = data.owner._id === userId._id; */
+        /* this._card = card; */
+        this._id = data; 
+        /* this._likesArray = data.likes; */
         this._image = data.link;
         this._name = data.name;
-        this._setLike = setLike;
-        this._remLike = remLike;
+        /* this._setLike = setLike;
+        this._remLike = remLike; */
+        this._toggleLike = handleToggleLike;
         
     }
 
@@ -37,16 +40,19 @@ export class Card {
         cardImage.alt = this._name;
         cardName.textContent = this._name;
         this._cardOwner(this._owner);
+        this._likeCounter = this._element.querySelector('.photo__like-counter');
+        this._setLikesCount(this._id.likes.length);
+        this._checkMyLike(this._id.likes);
         //сравниваем id текущего объекта с id пользователя. А метод find вернет объект, если объект пустой будет null
-        if(this._likesArray.find(likeObj => likeObj._id === this._userId)) { 
+        /* if(this._likesArray.find(likeObj => likeObj._id === this._userId)) { 
             this._element.querySelector('.button__like').classList.toggle('button__like-active');
             this._likeCounter.textContent = this._likesArray.length;
-        }  
+        } */  
         return this._element
     }
     
     //удалить карточку
-     _deleteCard(){
+    _deleteCard(){
         this._removeCard(this._element, this._id);
     }
     
@@ -76,8 +82,7 @@ export class Card {
 
        //ставим лайк 
        this._likeButton = this._element.querySelector('.button__like');
-       this._likeCounter = this._element.querySelector('.photo__like-counter');
-       this._likeButton.addEventListener('click', () => this._likeHandler());
+       this._likeButton.addEventListener('click', () => this._handleToggleLike());
        
         //открываем большую картинку
         this._element.querySelector('.elements__img').addEventListener('click', () => {

@@ -21,20 +21,27 @@ popupBigImage.setEventListeners(); //подключаем к попапу зак
 /**--------------------отрисовка карточек и информации------------------ */
 //функция отрисовки карточки
 function createCard(data) {
-    const card = new Card('#card-template', () => api.setLike(data._id), () => api.remLike(data._id),
-    {data,
-        handleCardClick: () => {
-            popupBigImage.open(data); //открытие большой картинки
-        }
-    }, 
+    const card = new Card(data, userId, '#card-template', 
+    {handleCardClick: () => {
+        popupBigImage.open(data); //открытие большой картинки
+    }},
     {
-        removeCard: function (cardElement, cardData) {
-            api.removeCard(cardData._id)
-            .then(() => cardElement.remove())
-            .catch((err) => console.log(err));
-        }
-    }, 
-    {userId});
+        handleToggleLike: function (action, data) {
+          if (action === 'PUT') {
+            return api.setLike(data._id);
+          } else {
+            return api.remLike(data._id);
+          }
+        },
+    },
+    function removeCard (elementItem, data) {
+        api.removeCard(data._id)
+            .then(() =>{
+                elementItem.remove();
+            })
+            .catch((err) => console.log(err))
+     }
+    );
     return card;
 }
 
