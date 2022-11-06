@@ -47,7 +47,7 @@ export class Card {
     
     //удалить карточку
      _deleteCard(){
-        this._removeCard();
+        this._removeCard(this._element, this._id);
     }
     
     _cardClickHandler(evt) {
