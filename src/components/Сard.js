@@ -1,5 +1,5 @@
 export class Card {
-    constructor(cardTemplate, setLike, remLike, { data, handleCardClick}, removeCard, {userId}) {
+    constructor(cardTemplate, setLike, remLike, {data, handleCardClick}, {removeCard}, {userId}) {
         this._handleCardClick = handleCardClick;
         this._cardTemplate = cardTemplate;
         this._removeCard = removeCard;
@@ -85,9 +85,11 @@ export class Card {
         });
 
         //удаляем свою карточку
-        if(this._owner == this._userId) {
-            const cardDelete = this._element.querySelector('.button__del');
-            cardDelete.addEventListener('click', () => this._deleteCard(cardDelete));
-        } 
+        this._deleteButton = this._element.querySelector('.button__del');
+        this._deleteButton.addEventListener('click', (evt) => {
+            const cardElement = evt.target.closest('.elements__item')
+            console.log(this._removeCard)
+            this._removeCard(cardElement, this._id)
+        });
     }
 }

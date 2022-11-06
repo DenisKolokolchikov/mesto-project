@@ -27,21 +27,17 @@ function createCard(data) {
             popupBigImage.open(data); //открытие большой картинки
         }
     }, 
-    () =>  handleDeleteCard(data._id), 
+    {
+        removeCard: function (cardElement, cardData) {
+            api.removeCard(cardData._id)
+            .then(() => cardElement.remove())
+            .catch((err) => console.log(err));
+        }
+    }, 
     {userId});
     return card;
 }
 
-/**---------------------------удаление карточки с сервера___________________________________________ */
-function handleDeleteCard(id)  {
-    api.removeCard(id)
-        .then(() => {
-            const elementItem = document.querySelector('.elements__item');
-            elementItem.closest('.elements__item').remove();
-        })
-        .catch((err) => console.log(err));
-};
-/**---------------------------------------------------------------------------------- */
 
 //создание карточки - дабавление в DOM
 const cardList = new Section({
