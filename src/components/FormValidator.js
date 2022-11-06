@@ -59,7 +59,7 @@ export class FormValidator {
     _setEventListener() {
         this._inputList = Array.from(this._form.querySelectorAll(this._inputSelector));
         this._submitButton = this._form.querySelector(this._submitButtonSelector);
-        this._toggleButtonState(this._inputList, this._submitButton); 
+        this._toggleButtonState(); 
 
         this._inputList.forEach(input => {
             input.addEventListener('input', () => {
@@ -73,4 +73,3 @@ export class FormValidator {
         this._setEventListener();
     }
 }
-

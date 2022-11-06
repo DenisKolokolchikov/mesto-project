@@ -4,7 +4,8 @@ export class PopupWithForm extends Popup {
     constructor(popupElement, {handleSubmitForm}) {
         super(popupElement);
         this.handleSubmitForm = handleSubmitForm; //обработчик сабмита формы
-        this._form = this.popupElement.querySelector('.form__popup');  
+        this._form = this.popupElement.querySelector('.form__popup');
+        this._inputList = this.popupElement.querySelectorAll('.popup__input');
       }
 
       _setSubmitForm(evt) {
@@ -13,8 +14,7 @@ export class PopupWithForm extends Popup {
       }
 
       //собираем данные полей формы
-      _getInputValues() { 
-        this._inputList = this.popupElement.querySelectorAll('.popup__input');
+      _getInputValues() {
         this._formValues = {};
         this._inputList.forEach(input => { //перепрали инпуты и закинули в пустой объект
           this._formValues[input.name] = input.value;
@@ -24,7 +24,7 @@ export class PopupWithForm extends Popup {
 
       //закрытие попапа - всё сбрасываем
       close() {
-        this._form.reset(); //исправил и тут
+        this._form.reset();
         super.close();
       }
 
