@@ -1,17 +1,14 @@
 export class Card {
-    constructor(cardTemplate, setLike, remLike, { data, handleCardClick}, removeCard, {userId}) {
+    constructor(data, userId, cardTemplate, {handleCardClick}, {handleToggleLike}, {removeCard}) {
         this._handleCardClick = handleCardClick;
         this._cardTemplate = cardTemplate;
         this._removeCard = removeCard;
         this._userId = userId; 
         this._owner = data.owner._id;
-        this._id = data._id;
-        this._likesArray = data.likes;
+        this._id = data; 
         this._image = data.link;
         this._name = data.name;
-        this._setLike = setLike;
-        this._remLike = remLike;
-        
+        this._toggleLike = handleToggleLike;    
     }
 
     // клонировать темлейт из html в DOM
@@ -20,7 +17,7 @@ export class Card {
     }
 
     //определить владельца карточки
-    _cardOwner(_owner){    //если не владелец, корзинка удаления не отображается
+    _cardOwner(_owner) {    //если не владелец, корзинка удаления не отображается
         if(this._owner !== this._userId) {
             const cardDelete = this._element.querySelector('.button__del');
             cardDelete.remove(); 
@@ -37,16 +34,15 @@ export class Card {
         cardImage.alt = this._name;
         cardName.textContent = this._name;
         this._cardOwner(this._owner);
-        //сравниваем id текущего объекта с id пользователя. А метод find вернет объект, если объект пустой будет null
-        if(this._likesArray.find(likeObj => likeObj._id === this._userId)) { 
-            this._element.querySelector('.button__like').classList.toggle('button__like-active'); 
-        }  
+        this._likeCounter = this._element.querySelector('.photo__like-counter');
+        this._setLikesCount(this._id.likes.length);
+        this._checkMyLike(this._id.likes);  
         return this._element
     }
     
     //удалить карточку
-     _deleteCard(){
-        this._removeCard();
+    _deleteCard() {
+        this._removeCard(this._element, this._id);
     }
     
     _cardClickHandler(evt) {
@@ -56,16 +52,35 @@ export class Card {
     }
 
     //отображаем лайки
-    _likeHandler(likeButton, likeCounter) {
-        if (likeButton.classList.contains('button__like-active')) {
-            likeButton.classList.remove('button__like-active');
-            likeCounter.textContent = this._likesArray.length -= 1;
-            this._remLike(this._id);
-            return;
+    _handleToggleLike() {
+        if (!this._likeButton.classList.contains('button__like-active')) {
+            this._toggleLike('PUT', this._id)
+                .then((data) => {
+                this._setLikesCount(data.likes.length);
+                this._checkMyLike(data.likes);
+                })
+                .catch((err) => console.log(err));
+            } else {
+            this._toggleLike('DELETE', this._id)
+                .then((data) => {
+                this._setLikesCount(data.likes.length);
+                this._checkMyLike(data.likes);
+                })
+                .catch((err) => console.log(err));
         }
-        likeButton.classList.add('button__like-active');
-        this._setLike(this._id);
-        likeCounter.textContent = this._likesArray.length += 1;
+    }
+
+    _setLikesCount(length) {
+        this._likeCounter.textContent = length;
+    }  
+
+    _checkMyLike(likes) {
+        const myLike = (likeObj) => likeObj._id === this._userId;
+        if(likes.find(myLike)) { 
+            this._likeButton.classList.add('button__like-active');   
+        } else {
+            this._likeButton.classList.remove('button__like-active');
+        }
     }
 
     //слушатели событий
@@ -74,19 +89,19 @@ export class Card {
         this._element.addEventListener('click', this._cardHandler);
 
        //ставим лайк 
-       const likeButton = this._element.querySelector('.button__like');
-       const likeCounter = this._element.querySelector('.photo__like-counter');
-       likeButton.addEventListener('click', () => this._likeHandler(likeButton, likeCounter));
-
+       this._likeButton = this._element.querySelector('.button__like');
+       this._likeButton.addEventListener('click', () => this._handleToggleLike());
+       
         //открываем большую картинку
         this._element.querySelector('.elements__img').addEventListener('click', () => {
             this._handleCardClick();
         });
 
         //удаляем свою карточку
-        if(this._owner == this._userId) {
-            const cardDelete = this._element.querySelector('.button__del');
-            cardDelete.addEventListener('click', () => this._deleteCard(cardDelete));
-        } 
+        this._deleteButton = this._element.querySelector('.button__del');
+        this._deleteButton.addEventListener('click', (evt) => {
+            const cardElement = evt.target.closest('.elements__item')
+            this._removeCard(cardElement, this._id)
+        });
     }
 }

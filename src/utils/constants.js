@@ -24,7 +24,6 @@ export const popupAvatar = document.querySelector('.popup__avatar');
 export const profileAvatarOverlay = document.querySelector('.profile__avatar-overlay');
 export const popupNewImage = document.querySelector('.popup-image');
 export const addButton = document.querySelector('.button__add');
-export const inputList = Array.from(document.querySelectorAll('.popup__input'));
 export const formEdit = document.querySelector('.form__edit');
 export const formImage = document.querySelector('.form__image');
 export const formAvatar = document.querySelector('.form__avatar');

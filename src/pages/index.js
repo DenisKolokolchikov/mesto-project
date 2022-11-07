@@ -9,7 +9,7 @@ import { PopupWithForm } from '../components/PopupWithForm';
 import { FormValidator } from '../components/FormValidator';
 import { changeLoading } from '../utils/utils';
 import { popupImage, popupProfile, saveButton, editButton, nameInput, jobInput, popupAvatar, profileAvatarOverlay, popupNewImage,
-    addButton, inputList, formEdit, formImage, formAvatar, buttonAddSave, buttonAvatarSave, 
+    addButton, formEdit, formImage, formAvatar, buttonAddSave, buttonAvatarSave, 
     cardContainer, validationConfig, config } from '../utils/constants';
 
 export const api = new Api(config);
@@ -21,27 +21,28 @@ popupBigImage.setEventListeners(); //подключаем к попапу зак
 /**--------------------отрисовка карточек и информации------------------ */
 //функция отрисовки карточки
 function createCard(data) {
-    const card = new Card('#card-template', () => api.setLike(data._id), () => api.remLike(data._id),
-    {data,
-        handleCardClick: () => {
-            popupBigImage.open(data); //открытие большой картинки
-        }
-    }, 
-    () =>  handleDeleteCard(data._id), 
-    {userId});
+    const card = new Card(data, userId, '#card-template', 
+    {handleCardClick: () => {
+        popupBigImage.open(data); //открытие большой картинки
+    }},
+    {
+        handleToggleLike: function (action, data) {
+          if (action === 'PUT') {
+            return api.setLike(data._id);
+          } else {
+            return api.remLike(data._id);
+          }
+        },
+    },
+    {removeCard: function (cardElement, cardData) {
+        api.removeCard(cardData._id)
+        .then(() => cardElement.remove())
+        .catch((err) => console.log(err));
+    }}
+    );
     return card;
 }
 
-/**---------------------------удаление карточки с сервера___________________________________________ */
-function handleDeleteCard(id)  {
-    api.removeCard(id)
-        .then(() => {
-            const elementItem = document.querySelector('.elements__item');
-            elementItem.closest('.elements__item').remove();
-        })
-        .catch((err) => console.log(err));
-};
-/**---------------------------------------------------------------------------------- */
 
 //создание карточки - дабавление в DOM
 const cardList = new Section({
@@ -62,8 +63,7 @@ const profileInfo = new UserInfo({
 let userId = null 
 api.getAllUnfo()
 .then(([items, user]) => {
-    items = items.reverse(); //add
-    profileInfo.getInfoUser(user.name, user.about, user.avatar);
+    items = items.reverse(); 
     profileInfo.setUserInfo(user);
     userId = user._id;
     cardList.renderItems(items);
@@ -86,8 +86,6 @@ const profileFormPopup = new PopupWithForm(popupProfile, {
         .finally(()=>changeLoading(false, saveButton)); 
     } 
 });
-profileFormPopup.setEventListeners();
-
 
 //открытие попапа редактирования профиля
 const openProfileFormPopup = () => {
@@ -95,7 +93,6 @@ const openProfileFormPopup = () => {
     nameInput.value = userInfoEdit.name; //при открытие получаем данные с сервера в полях ввода
     jobInput.value = userInfoEdit.about;
     validProfile.clearError(formEdit); //отчищаем при открытие ошибки валидации
-    validProfile.toggleButtonState(inputList, saveButton); //блокировка/разблокировка кнопки валидацией
     profileFormPopup.open();
 }
 //подключаем кнопку сохранить попапа редактирование инфо пользователя
@@ -109,19 +106,17 @@ const openAvatarChange = new PopupWithForm(popupAvatar, {
         changeLoading(true, buttonAvatarSave); //изменение 'Сохранить' на 'Сохранение...'
         api.patchAvatar(user.linkAvatar)
         .then((res) => {
-            profileInfo.makeUserAvatar(res)  
+            profileInfo.setUserInfo(res)  
             openAvatarChange.close();
         })
        .catch((err)=> console.log(err))
        .finally(()=>changeLoading(false, buttonAvatarSave));
     }
 })
-openAvatarChange.setEventListeners(); //подключаем к попапу закрытие крестиком и оверлай
 
 //открытие попап аватар
 const openUserAvatar = () => {
-    validNewAvatar.clearError(formAvatar); //блокировка/разблокировка кнопки валидацией
-    validNewAvatar.toggleButtonState(inputList, buttonAvatarSave); //блокировка/разблокировка кнопки валидацией
+    validNewAvatar.clearError(); //блокировка/разблокировка кнопки валидацией
     openAvatarChange.open();
 }
 //подключаем кнопку сохранить попапа аватар
@@ -144,13 +139,10 @@ const openFormPicture = new PopupWithForm(popupNewImage, {
     }
 });
 
-openFormPicture.setEventListeners();//подключаем к попапу закрытие крестиком и оверлай
-
 //открытие попап добавления картинки
 const openFormCard = () => {
     
-    validNewImage.clearError(formImage); //отчищаем при открытие ошибки валидации
-    validNewImage.toggleButtonState(inputList, buttonAddSave); //блокировка/разблокировка кнопки валидацией
+    validNewImage.clearError(); //отчищаем при открытие ошибки валидации
     openFormPicture.open();
 }
 
@@ -158,11 +150,15 @@ addButton.addEventListener('click', () => openFormCard());
 /**---------------------------------------------------------------------------------- */
 
 /**---------------------------валидация форм___________________________________________ */
-const validProfile = new FormValidator(validationConfig, popupProfile);
+const validProfile = new FormValidator(validationConfig, formEdit);
 validProfile.enableValidation();
 
-const validNewImage = new FormValidator(validationConfig, popupNewImage);
+const validNewImage = new FormValidator(validationConfig, formImage);
 validNewImage.enableValidation();
 
-const validNewAvatar = new FormValidator(validationConfig, popupAvatar);
+const validNewAvatar = new FormValidator(validationConfig, formAvatar);
 validNewAvatar.enableValidation();
+
+openAvatarChange.setEventListeners(); // добавил с FormValidator
+profileFormPopup.setEventListeners();
+openFormPicture.setEventListeners();
