@@ -101,7 +101,6 @@ export class Card {
         this._deleteButton = this._element.querySelector('.button__del');
         this._deleteButton.addEventListener('click', (evt) => {
             const cardElement = evt.target.closest('.elements__item')
-            console.log(this._removeCard)
             this._removeCard(cardElement, this._id)
         });
     }
